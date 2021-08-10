@@ -1,6 +1,6 @@
 package com.teeceetech.trellogithubwebhooksapi.web.controllers;
 
-import com.teeceetech.trellogithubwebhooksapi.web.models.GhPrRoot;
+import com.teeceetech.trellogithubwebhooksapi.web.models.GhRoot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class Github {
     public Github(){}
 
     @RequestMapping(value = "/api/github", method = RequestMethod.POST)
-    public void receiveGithubMessage(@RequestBody GhPrRoot message){
+    public void receiveGithubMessage(@RequestBody GhRoot message){
         if (message.action != null && message.getAction().equals("opened")){
             logger.info("PR OPENED, url = " + message.pull_request.url);
             logger.info("PR OPENED, id = " + message.pull_request.number);
