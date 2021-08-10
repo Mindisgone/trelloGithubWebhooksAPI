@@ -1,7 +1,6 @@
 package com.teeceetech.trellogithubwebhooksapi.web.controllers;
 
 import com.teeceetech.trellogithubwebhooksapi.web.models.github.GhRoot;
-import com.teeceetech.trellogithubwebhooksapi.web.models.trello.Card;
 import com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
-import java.util.Objects;
 
 @RestController
 public class Github {
@@ -41,7 +37,13 @@ public class Github {
 
             logger.info("trello key = " + trelloKey);
             logger.info("trello token = " + trelloToken);
-            logger.info("Card ID is = " + getCardId(message.pull_request.head.ref));
+
+            Root root = getCardId(message.pull_request.head.ref);
+
+            logger.info("Card ID is = " + root.cards.get(0).id);
+            /* if (root.cards.size() == 1){
+                logger.info("Card ID is = " + root.cards.get(0).id);
+            } */
         }
 
         if (message.action != null && message.getAction().equals("closed") && message.pull_request.merged){
@@ -52,21 +54,20 @@ public class Github {
 
             logger.info("trello key = " + trelloKey);
             logger.info("trello token = " + trelloToken);
-            logger.info("Card ID is = " + getCardId(message.pull_request.head.ref));
+
+            Root root = getCardId(message.pull_request.head.ref);
+
+            logger.info("Card ID is = " + root.cards.get(0).id);
+            /* if (root.cards.size() == 1){
+                logger.info("Card ID is = " + root.cards.get(0).id);
+            } */
         }
     }
 
-    private String getCardId(String name) {
-        String cardId = "";
+    private Root getCardId(String name) {
         String url = "https://api.trello.com/1/search?modelTypes=cards&query=" +
                 name + "&key=" + trelloKey + "&token=" + trelloToken;
-        // require non null
-        List<Card> cards = Objects.requireNonNull(restTemplate.getForObject(url, Root.class)).cards;
 
-        if (cards.size() == 1){
-            cardId = cards.get(0).id;
-        }
-
-        return cardId;
+        return restTemplate.getForObject(url, Root.class);
     }
 }
