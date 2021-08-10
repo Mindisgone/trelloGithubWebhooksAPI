@@ -7,6 +7,7 @@ public class GhRepository {
     public String node_id;
     public String name;
     public String full_name;
+    //  original property name from Github payload is called 'private' which is a protected name that cannot be used
     public boolean privateBool;
     public GhOwner owner;
     public String html_url;
