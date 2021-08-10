@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 public class Github {
     Logger logger = LoggerFactory.getLogger(Github.class);
@@ -16,7 +18,11 @@ public class Github {
     public Github(){}
 
     @RequestMapping(value = "/api/github", method = RequestMethod.POST)
-    public void receiveGithubMessage(@RequestBody Object message){
+    public void receiveGithubMessage(@RequestBody Map<String, Object> message){
         logger.info("GH message = " + message.toString());
+
+        if (message.get("action").toString().equals("opened")){
+            logger.info("PR OPENED, msg = " + message);
+        }
     }
 }
