@@ -1,4 +1,4 @@
-package com.teeceetech.trellogithubwebhooksapi.web.models;
+package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 
 public class GhCommits {
     public String href;

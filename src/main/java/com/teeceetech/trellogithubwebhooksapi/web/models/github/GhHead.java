@@ -1,13 +1,13 @@
-package com.teeceetech.trellogithubwebhooksapi.web.models;
+package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 
-public class GhBase {
+public class GhHead {
     public String label;
     public String ref;
     public String sha;
     public GhUser user;
     public GhRepo repo;
 
-    public GhBase() {
+    public GhHead() {
     }
 
     public String getLabel() {

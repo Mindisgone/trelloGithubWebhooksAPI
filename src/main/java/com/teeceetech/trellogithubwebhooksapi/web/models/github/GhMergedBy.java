@@ -1,6 +1,6 @@
-package com.teeceetech.trellogithubwebhooksapi.web.models;
+package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 
-public class GhAssignee {
+public class GhMergedBy {
     public String login;
     public int id;
     public String node_id;
@@ -20,7 +20,7 @@ public class GhAssignee {
     public String type;
     public boolean site_admin;
 
-    public GhAssignee() {
+    public GhMergedBy() {
     }
 
     public String getLogin() {
