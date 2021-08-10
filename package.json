@@ -1,0 +1,13 @@
+{
+  "name": "trellogithubapi",
+  "version": "0.0.0-development",
+  "scripts": {
+    "build": "gradle build",
+    "test": "gradle test"
+  },
+  "private": true,
+  "devDependencies": {
+    "gradle": "^1.2.4",
+    "semantic-release": "^17.4.4"
+  }
+}
