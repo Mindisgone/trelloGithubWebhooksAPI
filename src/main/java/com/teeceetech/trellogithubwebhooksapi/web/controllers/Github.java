@@ -19,8 +19,17 @@ public class Github {
     @RequestMapping(value = "/api/github", method = RequestMethod.POST)
     public void receiveGithubMessage(@RequestBody GhPrRoot message){
         if (message.action != null && message.getAction().equals("opened")){
-            logger.info("GH message = " + message);
             logger.info("PR OPENED, url = " + message.pull_request.url);
+            logger.info("PR OPENED, id = " + message.pull_request.id);
+            logger.info("PR OPENED, author is = " + message.pull_request.assignee.login);
+            logger.info("PR OPENED, branch is = " + message.pull_request.head.ref);
+        }
+
+        if (message.action != null && message.getAction().equals("closed") && message.pull_request.merged){
+            logger.info("PR CLOSED, url = " + message.pull_request.url);
+            logger.info("PR CLOSED, id = " + message.pull_request.id);
+            logger.info("PR CLOSED, author is = " + message.pull_request.merged_by.login);
+            logger.info("PR CLOSED, branch is = " + message.pull_request.head.ref);
         }
     }
 }
