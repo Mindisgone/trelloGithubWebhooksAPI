@@ -1,6 +1,6 @@
 package com.teeceetech.trellogithubwebhooksapi.web.controllers;
 
-import com.teeceetech.trellogithubwebhooksapi.web.models.GhRoot;
+import com.teeceetech.trellogithubwebhooksapi.web.models.github.GhRoot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class Github {
     Logger logger = LoggerFactory.getLogger(Github.class);
+
+    RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
     public Github(){}
@@ -31,5 +34,9 @@ public class Github {
             logger.info("PR CLOSED, author is = " + message.pull_request.merged_by.login);
             logger.info("PR CLOSED, branch is = " + message.pull_request.head.ref);
         }
+    }
+
+    private Integer getCardId(String name) {
+        return 1;
     }
 }
