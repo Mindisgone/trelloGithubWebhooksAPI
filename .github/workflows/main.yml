@@ -22,6 +22,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - run: ./gradlew build --scan -s
+      - uses: actions/setup-node@v1
+          with:
+            node-version: "16.x"
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
