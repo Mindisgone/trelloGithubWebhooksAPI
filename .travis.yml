@@ -8,7 +8,7 @@ branches:
   only:
   - master
 script:
--
+- printf 'trello.key=$trello.key\ntrello.token=$trello.token' > $TRAVIS_BUILD_DIR/src/main/resources/application-local.properties
 - echo yes | ./gradlew build --scan -s
 env:
   global:
