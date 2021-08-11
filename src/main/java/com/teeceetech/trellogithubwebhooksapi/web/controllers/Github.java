@@ -81,17 +81,17 @@ public class Github {
         addCardComment(getCardId(ghRoot.pull_request.head.ref, trelloKey, token), comment, trelloKey, token);
     }
 
+    private void buildPrReviewComment(GhRoot ghRoot, String trelloKey, String token) {
+        String comment = ghRoot.review.body + " by Github user " + ghRoot.review.user.login +
+                " reviewed on PR " + ghRoot.pull_request.number + " " + ghRoot.review.html_url;
+
+        addCardComment(getCardId(ghRoot.pull_request.head.ref, trelloKey, token), comment, trelloKey, token);
+    }
+
     private void buildPrComment(GhRoot ghRoot, String trelloKey, String token) {
         String comment = "Github User " + ghRoot.comment.user.login + " commented " +
                 ghRoot.comment.body + " on PR " + ghRoot.issue.number + " " + ghRoot.comment.html_url;
 
         addCardComment(getCardId(ghRoot.issue.title, trelloKey, token), comment, trelloKey, token);
-    }
-
-    private void buildPrReviewComment(GhRoot ghRoot, String trelloKey, String token) {
-        String comment = "Github User " + ghRoot.review.user.login + " commented " +
-                ghRoot.review.body + " on PR " + ghRoot.pull_request.number + " " + ghRoot.review.html_url;
-
-        addCardComment(getCardId(ghRoot.pull_request.head.ref, trelloKey, token), comment, trelloKey, token);
     }
 }
