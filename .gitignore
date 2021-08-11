@@ -5,6 +5,7 @@ src/main/resources/application-local.properties
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+/scripts/
 
 ### STS ###
 .apt_generated
@@ -38,4 +39,4 @@ out/
 .vscode/
 
 # dependencies
-/node_modules
+/node_modules/
