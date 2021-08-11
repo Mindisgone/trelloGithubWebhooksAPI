@@ -25,9 +25,11 @@ public class Github {
                 buildPrMergedComment(message, trelloKey, token);
             }
 
-            if (message.action != null && message.getAction().equals("created") && message.comment != null){
-                // PR title needs to be the same as branch name and trello card
-                buildPrComment(message, trelloKey, token);
+            if (message.action != null && message.getAction().equals("created")){
+                if (message.comment != null || message.review != null) {
+                    // PR title needs to be the same as branch name and trello card
+                    buildPrComment(message, trelloKey, token);
+                }
             }
         }
     }
