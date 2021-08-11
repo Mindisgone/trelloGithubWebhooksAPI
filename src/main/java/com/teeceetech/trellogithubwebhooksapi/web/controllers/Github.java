@@ -1,6 +1,7 @@
 package com.teeceetech.trellogithubwebhooksapi.web.controllers;
 
 import com.teeceetech.trellogithubwebhooksapi.web.models.github.GhRoot;
+import com.teeceetech.trellogithubwebhooksapi.web.models.trello.Card;
 import com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root;
 import com.teeceetech.trellogithubwebhooksapi.web.models.trello.Term;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,11 @@ public class Github {
                 buildPrMergedComment(message, trelloKey, token);
             }
 
-            if (message.action != null && message.getAction().equals("created")){
-                if (message.comment != null || message.review != null) {
-                    // PR title needs to be the same as branch name and trello card
-                    buildPrComment(message, trelloKey, token);
-                }
+            if (message.action != null && message.getAction().equals("created") &&
+                    message.comment != null && message.issue != null){
+
+                // PR title needs to be the same as branch name and trello card
+                buildPrComment(message, trelloKey, token);
             }
         }
     }
@@ -41,8 +42,12 @@ public class Github {
 
         Root root = restTemplate.getForObject(url, Root.class);
 
-        if (root != null && root.cards.size() == 1){
-            cardId = root.cards.get(0).id;
+        if (root != null){
+            for (Card card : root.cards) {
+                if (card.name.equals(name)) {
+                    cardId = card.id;
+                }
+            }
         }
 
         return cardId;
@@ -54,7 +59,9 @@ public class Github {
         Term term = new Term();
         term.setText(text);
 
-        restTemplate.postForLocation(url, term);
+        if (ID.length() > 0) {
+            restTemplate.postForLocation(url, term);
+        }
     }
 
     private void buildPrOpenComment(GhRoot ghRoot, String trelloKey, String token) {
