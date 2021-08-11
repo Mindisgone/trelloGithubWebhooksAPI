@@ -6,6 +6,6 @@ jdk: oraclejdk8
 sudo: required
 branches:
   only:
-  - master
+    - master
 script:
   - echo yes | ./gradlew build --scan -s

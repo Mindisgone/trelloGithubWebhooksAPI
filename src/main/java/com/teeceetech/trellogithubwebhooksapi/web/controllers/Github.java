@@ -25,7 +25,7 @@ public class Github {
                 buildPrMergedComment(message, trelloKey, token);
             }
 
-            if (message.action != null && message.getAction().equals("created")){
+            if (message.action != null && message.getAction().equals("created") && message.comment != null){
                 // PR title needs to be the same as branch name and trello card
                 buildPrComment(message, trelloKey, token);
             }
@@ -56,7 +56,7 @@ public class Github {
     }
 
     private void buildPrOpenComment(GhRoot ghRoot, String trelloKey, String token) {
-        String comment = "Opened PR " + ghRoot.pull_request.number + " [PR](" + ghRoot.pull_request.url + ")";
+        String comment = "Opened PR " + ghRoot.pull_request.number + ", link -> [PR](" + ghRoot.pull_request.url + ")";
 
         addCardComment(getCardId(ghRoot.pull_request.head.ref, trelloKey, token), comment, trelloKey, token);
     }
@@ -69,8 +69,8 @@ public class Github {
     }
 
     private void buildPrComment(GhRoot ghRoot, String trelloKey, String token) {
-        String comment = "{Github User " + ghRoot.comment.user.login + " commented " +
-                ghRoot.comment.body + " on PR " + ghRoot.issue.number + " " + ghRoot.comment.html_url + "}";
+        String comment = "Github User " + ghRoot.comment.user.login + " commented " +
+                ghRoot.comment.body + " on PR " + ghRoot.issue.number + " " + ghRoot.comment.html_url;
 
         addCardComment(getCardId(ghRoot.issue.title, trelloKey, token), comment, trelloKey, token);
     }
