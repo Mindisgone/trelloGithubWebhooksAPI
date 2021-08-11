@@ -10,8 +10,6 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class Github {
-    RestTemplate restTemplate = new RestTemplate();
-
     @Autowired
     public Github(){}
 
@@ -40,6 +38,7 @@ public class Github {
     }
 
     private String getCardId(String name, String trelloKey, String token) {
+        RestTemplate restTemplate = new RestTemplate();
         String cardId = "";
         String url = "https://api.trello.com/1/search?modelTypes=cards&query=" +
                 name + "&key=" + trelloKey + "&token=" + token;
@@ -58,6 +57,7 @@ public class Github {
     }
 
     private void addCardComment(String ID, String text, String trelloKey, String token) {
+        RestTemplate restTemplate = new RestTemplate();
         String url = "https://api.trello.com/1/cards/" +
                 ID + "/actions/comments?key=" + trelloKey + "&token=" + token;
         Term term = new Term();
