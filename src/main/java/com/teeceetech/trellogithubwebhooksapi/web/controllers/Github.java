@@ -3,15 +3,12 @@ package com.teeceetech.trellogithubwebhooksapi.web.controllers;
 import com.teeceetech.trellogithubwebhooksapi.web.models.github.GhRoot;
 import com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root;
 import com.teeceetech.trellogithubwebhooksapi.web.models.trello.Term;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class Github {
-    Logger logger = LoggerFactory.getLogger(Github.class);
     RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
@@ -44,8 +41,6 @@ public class Github {
 
         if (root != null && root.cards.size() == 1){
             cardId = root.cards.get(0).id;
-        } else {
-            logger.error("search produced no results");
         }
 
         return cardId;
@@ -57,12 +52,11 @@ public class Github {
         Term term = new Term();
         term.setText(text);
 
-        logger.info("GITHUB CONTROLLER: adding comment " + text + " to card " + ID);
         restTemplate.postForLocation(url, term);
     }
 
     private void buildPrOpenComment(GhRoot ghRoot, String trelloKey, String token) {
-        String comment = "Opened PR " + ghRoot.pull_request.number + " " + ghRoot.pull_request.url;
+        String comment = "Opened PR " + ghRoot.pull_request.number + " [PR](" + ghRoot.pull_request.url + ")";
 
         addCardComment(getCardId(ghRoot.pull_request.head.ref, trelloKey, token), comment, trelloKey, token);
     }
