@@ -33,7 +33,7 @@ public class Github {
                 buildPrComment(message, trelloKey, token);
             }
 
-            if (message.action != null && message.getAction().equals("review")) {
+            if (message.action != null && message.getAction().equals("submitted")) {
                 buildPrReviewComment(message, trelloKey, token);
             }
         }
