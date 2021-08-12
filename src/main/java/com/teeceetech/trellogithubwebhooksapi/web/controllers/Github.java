@@ -35,6 +35,10 @@ public class Github {
             if (message.action != null && message.getAction().equals("submitted")) {
                 buildPrReviewComment(message, trelloKey, token);
             }
+
+            if (message.action != null && message.getAction().equals("closed") && !message.pull_request.merged){
+                buildPrClosedComment(message, trelloKey, token);
+            }
         }
     }
 
@@ -107,5 +111,12 @@ public class Github {
                 ghRoot.comment.body + " on " + ghRoot.issue.html_url + ", comment link -> " + ghRoot.comment.html_url;
 
         addCardComment(getCardId(ghRoot.issue.title, trelloKey, token), comment, trelloKey, token);
+    }
+
+    private void buildPrClosedComment(GhRoot ghRoot, String trelloKey, String token) {
+        String comment = "Closed PR " + ghRoot.pull_request.html_url + " was not merged, from " +
+                ghRoot.pull_request.merged_by.login;
+
+        addCardComment(getCardId(ghRoot.pull_request.head.ref, trelloKey, token), comment, trelloKey, token);
     }
 }
