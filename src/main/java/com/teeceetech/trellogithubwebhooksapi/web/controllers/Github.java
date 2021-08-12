@@ -1,5 +1,6 @@
 package com.teeceetech.trellogithubwebhooksapi.web.controllers;
 
+import com.teeceetech.trellogithubwebhooksapi.web.models.github.Attachment;
 import com.teeceetech.trellogithubwebhooksapi.web.models.github.GhRoot;
 import com.teeceetech.trellogithubwebhooksapi.web.models.trello.Card;
 import com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root;
@@ -56,6 +57,18 @@ public class Github {
         return cardId;
     }
 
+    private void addCardAttachment(String ID, String attachmentURL, String trelloKey, String token) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "https://api.trello.com/1/cards/" +
+                ID + "/attachments?key=" + trelloKey + "&token=" + token;
+        Attachment attachment = new Attachment();
+        attachment.setUrl(attachmentURL);
+
+        if (ID.length() > 0) {
+            restTemplate.postForLocation(url, attachment);
+        }
+    }
+
     private void addCardComment(String ID, String text, String trelloKey, String token) {
         RestTemplate restTemplate = new RestTemplate();
         String url = "https://api.trello.com/1/cards/" +
@@ -71,6 +84,8 @@ public class Github {
     private void buildPrOpenComment(GhRoot ghRoot, String trelloKey, String token) {
         String comment = "Opened PR " + ghRoot.pull_request.html_url;
 
+        addCardAttachment(getCardId(ghRoot.pull_request.head.ref, trelloKey, token),
+                ghRoot.pull_request.html_url, trelloKey, token);
         addCardComment(getCardId(ghRoot.pull_request.head.ref, trelloKey, token), comment, trelloKey, token);
     }
 
