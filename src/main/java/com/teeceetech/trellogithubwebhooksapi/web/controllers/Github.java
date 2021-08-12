@@ -69,28 +69,27 @@ public class Github {
     }
 
     private void buildPrOpenComment(GhRoot ghRoot, String trelloKey, String token) {
-        String comment = "Opened PR " + ghRoot.pull_request.number + ", link -> [PR](" + ghRoot.pull_request.html_url + ")";
+        String comment = "Opened PR " + ghRoot.pull_request.html_url;
 
         addCardComment(getCardId(ghRoot.pull_request.head.ref, trelloKey, token), comment, trelloKey, token);
     }
 
     private void buildPrMergedComment(GhRoot ghRoot, String trelloKey, String token) {
-        String comment = "Merged PR " + ghRoot.pull_request.number + " from " +
-                ghRoot.pull_request.merged_by.login + " " + ghRoot.pull_request.html_url;
+        String comment = "Merged PR " + ghRoot.pull_request.html_url + " from " + ghRoot.pull_request.merged_by.login;
 
         addCardComment(getCardId(ghRoot.pull_request.head.ref, trelloKey, token), comment, trelloKey, token);
     }
 
     private void buildPrReviewComment(GhRoot ghRoot, String trelloKey, String token) {
         String comment = ghRoot.review.body + " by Github user " + ghRoot.review.user.login +
-                " reviewed on PR " + ghRoot.pull_request.number + " " + ghRoot.review.html_url;
+                " reviewed on " + ghRoot.pull_request.html_url + ", review link -> " + ghRoot.review.html_url;
 
         addCardComment(getCardId(ghRoot.pull_request.head.ref, trelloKey, token), comment, trelloKey, token);
     }
 
     private void buildPrComment(GhRoot ghRoot, String trelloKey, String token) {
         String comment = "Github User " + ghRoot.comment.user.login + " commented " +
-                ghRoot.comment.body + " on PR " + ghRoot.issue.number + " " + ghRoot.comment.html_url;
+                ghRoot.comment.body + " on " + ghRoot.issue.html_url + ", comment link -> " + ghRoot.comment.html_url;
 
         addCardComment(getCardId(ghRoot.issue.title, trelloKey, token), comment, trelloKey, token);
     }
