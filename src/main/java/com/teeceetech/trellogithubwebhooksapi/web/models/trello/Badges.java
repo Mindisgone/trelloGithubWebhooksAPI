@@ -1,142 +1,142 @@
 package com.teeceetech.trellogithubwebhooksapi.web.models.trello;
 
 public class Badges {
-    public AttachmentsByType attachmentsByType;
-    public boolean location;
-    public int votes;
-    public boolean viewingMemberVoted;
-    public boolean subscribed;
-    public String fogbugz;
-    public int checkItems;
-    public int checkItemsChecked;
-    public Object checkItemsEarliestDue;
-    public int comments;
-    public int attachments;
-    public boolean description;
-    public Object due;
-    public boolean dueComplete;
-    public Object start;
 
-    public Badges() {
-    }
+  public AttachmentsByType attachmentsByType;
+  public boolean location;
+  public int votes;
+  public boolean viewingMemberVoted;
+  public boolean subscribed;
+  public String fogbugz;
+  public int checkItems;
+  public int checkItemsChecked;
+  public Object checkItemsEarliestDue;
+  public int comments;
+  public int attachments;
+  public boolean description;
+  public Object due;
+  public boolean dueComplete;
+  public Object start;
 
-    public AttachmentsByType getAttachmentsByType() {
-        return attachmentsByType;
-    }
+  public Badges() {}
 
-    public void setAttachmentsByType(AttachmentsByType attachmentsByType) {
-        this.attachmentsByType = attachmentsByType;
-    }
+  public AttachmentsByType getAttachmentsByType() {
+    return attachmentsByType;
+  }
 
-    public boolean isLocation() {
-        return location;
-    }
+  public void setAttachmentsByType(AttachmentsByType attachmentsByType) {
+    this.attachmentsByType = attachmentsByType;
+  }
 
-    public void setLocation(boolean location) {
-        this.location = location;
-    }
+  public boolean isLocation() {
+    return location;
+  }
 
-    public int getVotes() {
-        return votes;
-    }
+  public void setLocation(boolean location) {
+    this.location = location;
+  }
 
-    public void setVotes(int votes) {
-        this.votes = votes;
-    }
+  public int getVotes() {
+    return votes;
+  }
 
-    public boolean isViewingMemberVoted() {
-        return viewingMemberVoted;
-    }
+  public void setVotes(int votes) {
+    this.votes = votes;
+  }
 
-    public void setViewingMemberVoted(boolean viewingMemberVoted) {
-        this.viewingMemberVoted = viewingMemberVoted;
-    }
+  public boolean isViewingMemberVoted() {
+    return viewingMemberVoted;
+  }
 
-    public boolean isSubscribed() {
-        return subscribed;
-    }
+  public void setViewingMemberVoted(boolean viewingMemberVoted) {
+    this.viewingMemberVoted = viewingMemberVoted;
+  }
 
-    public void setSubscribed(boolean subscribed) {
-        this.subscribed = subscribed;
-    }
+  public boolean isSubscribed() {
+    return subscribed;
+  }
 
-    public String getFogbugz() {
-        return fogbugz;
-    }
+  public void setSubscribed(boolean subscribed) {
+    this.subscribed = subscribed;
+  }
 
-    public void setFogbugz(String fogbugz) {
-        this.fogbugz = fogbugz;
-    }
+  public String getFogbugz() {
+    return fogbugz;
+  }
 
-    public int getCheckItems() {
-        return checkItems;
-    }
+  public void setFogbugz(String fogbugz) {
+    this.fogbugz = fogbugz;
+  }
 
-    public void setCheckItems(int checkItems) {
-        this.checkItems = checkItems;
-    }
+  public int getCheckItems() {
+    return checkItems;
+  }
 
-    public int getCheckItemsChecked() {
-        return checkItemsChecked;
-    }
+  public void setCheckItems(int checkItems) {
+    this.checkItems = checkItems;
+  }
 
-    public void setCheckItemsChecked(int checkItemsChecked) {
-        this.checkItemsChecked = checkItemsChecked;
-    }
+  public int getCheckItemsChecked() {
+    return checkItemsChecked;
+  }
 
-    public Object getCheckItemsEarliestDue() {
-        return checkItemsEarliestDue;
-    }
+  public void setCheckItemsChecked(int checkItemsChecked) {
+    this.checkItemsChecked = checkItemsChecked;
+  }
 
-    public void setCheckItemsEarliestDue(Object checkItemsEarliestDue) {
-        this.checkItemsEarliestDue = checkItemsEarliestDue;
-    }
+  public Object getCheckItemsEarliestDue() {
+    return checkItemsEarliestDue;
+  }
 
-    public int getComments() {
-        return comments;
-    }
+  public void setCheckItemsEarliestDue(Object checkItemsEarliestDue) {
+    this.checkItemsEarliestDue = checkItemsEarliestDue;
+  }
 
-    public void setComments(int comments) {
-        this.comments = comments;
-    }
+  public int getComments() {
+    return comments;
+  }
 
-    public int getAttachments() {
-        return attachments;
-    }
+  public void setComments(int comments) {
+    this.comments = comments;
+  }
 
-    public void setAttachments(int attachments) {
-        this.attachments = attachments;
-    }
+  public int getAttachments() {
+    return attachments;
+  }
 
-    public boolean isDescription() {
-        return description;
-    }
+  public void setAttachments(int attachments) {
+    this.attachments = attachments;
+  }
 
-    public void setDescription(boolean description) {
-        this.description = description;
-    }
+  public boolean isDescription() {
+    return description;
+  }
 
-    public Object getDue() {
-        return due;
-    }
+  public void setDescription(boolean description) {
+    this.description = description;
+  }
 
-    public void setDue(Object due) {
-        this.due = due;
-    }
+  public Object getDue() {
+    return due;
+  }
 
-    public boolean isDueComplete() {
-        return dueComplete;
-    }
+  public void setDue(Object due) {
+    this.due = due;
+  }
 
-    public void setDueComplete(boolean dueComplete) {
-        this.dueComplete = dueComplete;
-    }
+  public boolean isDueComplete() {
+    return dueComplete;
+  }
 
-    public Object getStart() {
-        return start;
-    }
+  public void setDueComplete(boolean dueComplete) {
+    this.dueComplete = dueComplete;
+  }
 
-    public void setStart(Object start) {
-        this.start = start;
-    }
+  public Object getStart() {
+    return start;
+  }
+
+  public void setStart(Object start) {
+    this.start = start;
+  }
 }

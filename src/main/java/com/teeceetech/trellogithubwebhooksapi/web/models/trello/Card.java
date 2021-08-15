@@ -4,286 +4,286 @@ import java.util.Date;
 import java.util.List;
 
 public class Card {
-    public String id;
-    public List<CheckItemState> checkItemStates;
-    public boolean closed;
-    public Date dateLastActivity;
-    public String desc;
-    public Object descData;
-    public int dueReminder;
-    public String idBoard;
-    public String idList;
-    public List<Object> idMembersVoted;
-    public int idShort;
-    public Object idAttachmentCover;
-    public List<Object> idLabels;
-    public boolean manualCoverAttachment;
-    public String name;
-    public int pos;
-    public String shortLink;
-    public boolean isTemplate;
-    public Object cardRole;
-    public boolean dueComplete;
-    public Object due;
-    public Object email;
-    public List<Object> labels;
-    public String shortUrl;
-    public Object start;
-    public String url;
-    public List<String> idMembers;
-    public Cover cover;
-    public Badges badges;
-    public boolean subscribed;
-    public List<String> idChecklists;
 
-    public Card() {
-    }
+  public String id;
+  public List<CheckItemState> checkItemStates;
+  public boolean closed;
+  public Date dateLastActivity;
+  public String desc;
+  public Object descData;
+  public int dueReminder;
+  public String idBoard;
+  public String idList;
+  public List<Object> idMembersVoted;
+  public int idShort;
+  public Object idAttachmentCover;
+  public List<Object> idLabels;
+  public boolean manualCoverAttachment;
+  public String name;
+  public int pos;
+  public String shortLink;
+  public boolean isTemplate;
+  public Object cardRole;
+  public boolean dueComplete;
+  public Object due;
+  public Object email;
+  public List<Object> labels;
+  public String shortUrl;
+  public Object start;
+  public String url;
+  public List<String> idMembers;
+  public Cover cover;
+  public Badges badges;
+  public boolean subscribed;
+  public List<String> idChecklists;
 
-    public String getId() {
-        return id;
-    }
+  public Card() {}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public List<CheckItemState> getCheckItemStates() {
-        return checkItemStates;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public void setCheckItemStates(List<CheckItemState> checkItemStates) {
-        this.checkItemStates = checkItemStates;
-    }
+  public List<CheckItemState> getCheckItemStates() {
+    return checkItemStates;
+  }
 
-    public boolean isClosed() {
-        return closed;
-    }
+  public void setCheckItemStates(List<CheckItemState> checkItemStates) {
+    this.checkItemStates = checkItemStates;
+  }
 
-    public void setClosed(boolean closed) {
-        this.closed = closed;
-    }
+  public boolean isClosed() {
+    return closed;
+  }
 
-    public Date getDateLastActivity() {
-        return dateLastActivity;
-    }
+  public void setClosed(boolean closed) {
+    this.closed = closed;
+  }
 
-    public void setDateLastActivity(Date dateLastActivity) {
-        this.dateLastActivity = dateLastActivity;
-    }
+  public Date getDateLastActivity() {
+    return dateLastActivity;
+  }
 
-    public String getDesc() {
-        return desc;
-    }
+  public void setDateLastActivity(Date dateLastActivity) {
+    this.dateLastActivity = dateLastActivity;
+  }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
+  public String getDesc() {
+    return desc;
+  }
 
-    public Object getDescData() {
-        return descData;
-    }
+  public void setDesc(String desc) {
+    this.desc = desc;
+  }
 
-    public void setDescData(Object descData) {
-        this.descData = descData;
-    }
+  public Object getDescData() {
+    return descData;
+  }
 
-    public int getDueReminder() {
-        return dueReminder;
-    }
+  public void setDescData(Object descData) {
+    this.descData = descData;
+  }
 
-    public void setDueReminder(int dueReminder) {
-        this.dueReminder = dueReminder;
-    }
+  public int getDueReminder() {
+    return dueReminder;
+  }
 
-    public String getIdBoard() {
-        return idBoard;
-    }
+  public void setDueReminder(int dueReminder) {
+    this.dueReminder = dueReminder;
+  }
 
-    public void setIdBoard(String idBoard) {
-        this.idBoard = idBoard;
-    }
+  public String getIdBoard() {
+    return idBoard;
+  }
 
-    public String getIdList() {
-        return idList;
-    }
+  public void setIdBoard(String idBoard) {
+    this.idBoard = idBoard;
+  }
 
-    public void setIdList(String idList) {
-        this.idList = idList;
-    }
+  public String getIdList() {
+    return idList;
+  }
 
-    public List<Object> getIdMembersVoted() {
-        return idMembersVoted;
-    }
+  public void setIdList(String idList) {
+    this.idList = idList;
+  }
 
-    public void setIdMembersVoted(List<Object> idMembersVoted) {
-        this.idMembersVoted = idMembersVoted;
-    }
+  public List<Object> getIdMembersVoted() {
+    return idMembersVoted;
+  }
 
-    public int getIdShort() {
-        return idShort;
-    }
+  public void setIdMembersVoted(List<Object> idMembersVoted) {
+    this.idMembersVoted = idMembersVoted;
+  }
 
-    public void setIdShort(int idShort) {
-        this.idShort = idShort;
-    }
+  public int getIdShort() {
+    return idShort;
+  }
 
-    public Object getIdAttachmentCover() {
-        return idAttachmentCover;
-    }
+  public void setIdShort(int idShort) {
+    this.idShort = idShort;
+  }
 
-    public void setIdAttachmentCover(Object idAttachmentCover) {
-        this.idAttachmentCover = idAttachmentCover;
-    }
+  public Object getIdAttachmentCover() {
+    return idAttachmentCover;
+  }
 
-    public List<Object> getIdLabels() {
-        return idLabels;
-    }
+  public void setIdAttachmentCover(Object idAttachmentCover) {
+    this.idAttachmentCover = idAttachmentCover;
+  }
 
-    public void setIdLabels(List<Object> idLabels) {
-        this.idLabels = idLabels;
-    }
+  public List<Object> getIdLabels() {
+    return idLabels;
+  }
 
-    public boolean isManualCoverAttachment() {
-        return manualCoverAttachment;
-    }
+  public void setIdLabels(List<Object> idLabels) {
+    this.idLabels = idLabels;
+  }
 
-    public void setManualCoverAttachment(boolean manualCoverAttachment) {
-        this.manualCoverAttachment = manualCoverAttachment;
-    }
+  public boolean isManualCoverAttachment() {
+    return manualCoverAttachment;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setManualCoverAttachment(boolean manualCoverAttachment) {
+    this.manualCoverAttachment = manualCoverAttachment;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public int getPos() {
-        return pos;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setPos(int pos) {
-        this.pos = pos;
-    }
+  public int getPos() {
+    return pos;
+  }
 
-    public String getShortLink() {
-        return shortLink;
-    }
+  public void setPos(int pos) {
+    this.pos = pos;
+  }
 
-    public void setShortLink(String shortLink) {
-        this.shortLink = shortLink;
-    }
+  public String getShortLink() {
+    return shortLink;
+  }
 
-    public boolean isTemplate() {
-        return isTemplate;
-    }
+  public void setShortLink(String shortLink) {
+    this.shortLink = shortLink;
+  }
 
-    public void setTemplate(boolean template) {
-        isTemplate = template;
-    }
+  public boolean isTemplate() {
+    return isTemplate;
+  }
 
-    public Object getCardRole() {
-        return cardRole;
-    }
+  public void setTemplate(boolean template) {
+    isTemplate = template;
+  }
 
-    public void setCardRole(Object cardRole) {
-        this.cardRole = cardRole;
-    }
+  public Object getCardRole() {
+    return cardRole;
+  }
 
-    public boolean isDueComplete() {
-        return dueComplete;
-    }
+  public void setCardRole(Object cardRole) {
+    this.cardRole = cardRole;
+  }
 
-    public void setDueComplete(boolean dueComplete) {
-        this.dueComplete = dueComplete;
-    }
+  public boolean isDueComplete() {
+    return dueComplete;
+  }
 
-    public Object getDue() {
-        return due;
-    }
+  public void setDueComplete(boolean dueComplete) {
+    this.dueComplete = dueComplete;
+  }
 
-    public void setDue(Object due) {
-        this.due = due;
-    }
+  public Object getDue() {
+    return due;
+  }
 
-    public Object getEmail() {
-        return email;
-    }
+  public void setDue(Object due) {
+    this.due = due;
+  }
 
-    public void setEmail(Object email) {
-        this.email = email;
-    }
+  public Object getEmail() {
+    return email;
+  }
 
-    public List<Object> getLabels() {
-        return labels;
-    }
+  public void setEmail(Object email) {
+    this.email = email;
+  }
 
-    public void setLabels(List<Object> labels) {
-        this.labels = labels;
-    }
+  public List<Object> getLabels() {
+    return labels;
+  }
 
-    public String getShortUrl() {
-        return shortUrl;
-    }
+  public void setLabels(List<Object> labels) {
+    this.labels = labels;
+  }
 
-    public void setShortUrl(String shortUrl) {
-        this.shortUrl = shortUrl;
-    }
+  public String getShortUrl() {
+    return shortUrl;
+  }
 
-    public Object getStart() {
-        return start;
-    }
+  public void setShortUrl(String shortUrl) {
+    this.shortUrl = shortUrl;
+  }
 
-    public void setStart(Object start) {
-        this.start = start;
-    }
+  public Object getStart() {
+    return start;
+  }
 
-    public String getUrl() {
-        return url;
-    }
+  public void setStart(Object start) {
+    this.start = start;
+  }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+  public String getUrl() {
+    return url;
+  }
 
-    public List<String> getIdMembers() {
-        return idMembers;
-    }
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
-    public void setIdMembers(List<String> idMembers) {
-        this.idMembers = idMembers;
-    }
+  public List<String> getIdMembers() {
+    return idMembers;
+  }
 
-    public Cover getCover() {
-        return cover;
-    }
+  public void setIdMembers(List<String> idMembers) {
+    this.idMembers = idMembers;
+  }
 
-    public void setCover(Cover cover) {
-        this.cover = cover;
-    }
+  public Cover getCover() {
+    return cover;
+  }
 
-    public Badges getBadges() {
-        return badges;
-    }
+  public void setCover(Cover cover) {
+    this.cover = cover;
+  }
 
-    public void setBadges(Badges badges) {
-        this.badges = badges;
-    }
+  public Badges getBadges() {
+    return badges;
+  }
 
-    public boolean isSubscribed() {
-        return subscribed;
-    }
+  public void setBadges(Badges badges) {
+    this.badges = badges;
+  }
 
-    public void setSubscribed(boolean subscribed) {
-        this.subscribed = subscribed;
-    }
+  public boolean isSubscribed() {
+    return subscribed;
+  }
 
-    public List<String> getIdChecklists() {
-        return idChecklists;
-    }
+  public void setSubscribed(boolean subscribed) {
+    this.subscribed = subscribed;
+  }
 
-    public void setIdChecklists(List<String> idChecklists) {
-        this.idChecklists = idChecklists;
-    }
+  public List<String> getIdChecklists() {
+    return idChecklists;
+  }
+
+  public void setIdChecklists(List<String> idChecklists) {
+    this.idChecklists = idChecklists;
+  }
 }

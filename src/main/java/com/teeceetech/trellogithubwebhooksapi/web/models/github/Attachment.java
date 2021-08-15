@@ -1,16 +1,16 @@
 package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 
 public class Attachment {
-    String url;
 
-    public Attachment() {
-    }
+  String url;
 
-    public String getUrl() {
-        return url;
-    }
+  public Attachment() {}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
+  }
 }
