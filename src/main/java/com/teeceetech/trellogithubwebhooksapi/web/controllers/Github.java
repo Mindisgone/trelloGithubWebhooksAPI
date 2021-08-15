@@ -26,7 +26,7 @@ public class Github {
                 buildPrMergedComment(message, trelloKey, token);
             }
 
-            if (event.equals("comment") && message.getAction().equals("created") &&
+            if (event.equals("issue_comment") && message.getAction().equals("created") &&
                     message.comment != null && message.issue != null){
 
                 // PR title needs to be the same as branch name and trello card
