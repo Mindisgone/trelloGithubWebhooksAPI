@@ -1,25 +1,25 @@
 package com.teeceetech.trellogithubwebhooksapi.web.models.trello;
 
 public class CheckItemState {
-    public String idCheckItem;
-    public String state;
 
-    public CheckItemState() {
-    }
+  public String idCheckItem;
+  public String state;
 
-    public String getIdCheckItem() {
-        return idCheckItem;
-    }
+  public CheckItemState() {}
 
-    public void setIdCheckItem(String idCheckItem) {
-        this.idCheckItem = idCheckItem;
-    }
+  public String getIdCheckItem() {
+    return idCheckItem;
+  }
 
-    public String getState() {
-        return state;
-    }
+  public void setIdCheckItem(String idCheckItem) {
+    this.idCheckItem = idCheckItem;
+  }
 
-    public void setState(String state) {
-        this.state = state;
-    }
+  public String getState() {
+    return state;
+  }
+
+  public void setState(String state) {
+    this.state = state;
+  }
 }

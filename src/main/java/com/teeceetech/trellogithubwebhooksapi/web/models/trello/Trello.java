@@ -1,25 +1,25 @@
 package com.teeceetech.trellogithubwebhooksapi.web.models.trello;
 
 public class Trello {
-    public int board;
-    public int card;
 
-    public Trello() {
-    }
+  public int board;
+  public int card;
 
-    public int getBoard() {
-        return board;
-    }
+  public Trello() {}
 
-    public void setBoard(int board) {
-        this.board = board;
-    }
+  public int getBoard() {
+    return board;
+  }
 
-    public int getCard() {
-        return card;
-    }
+  public void setBoard(int board) {
+    this.board = board;
+  }
 
-    public void setCard(int card) {
-        this.card = card;
-    }
+  public int getCard() {
+    return card;
+  }
+
+  public void setCard(int card) {
+    this.card = card;
+  }
 }

@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npm test
+node node_modules/prettier/bin-prettier.js -w src/**/*.java

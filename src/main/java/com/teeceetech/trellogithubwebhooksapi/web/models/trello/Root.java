@@ -3,25 +3,25 @@ package com.teeceetech.trellogithubwebhooksapi.web.models.trello;
 import java.util.List;
 
 public class Root {
-    public Options options;
-    public List<Card> cards;
 
-    public Root() {
-    }
+  public Options options;
+  public List<Card> cards;
 
-    public Options getOptions() {
-        return options;
-    }
+  public Root() {}
 
-    public void setOptions(Options options) {
-        this.options = options;
-    }
+  public Options getOptions() {
+    return options;
+  }
 
-    public List<Card> getCards() {
-        return cards;
-    }
+  public void setOptions(Options options) {
+    this.options = options;
+  }
 
-    public void setCards(List<Card> cards) {
-        this.cards = cards;
-    }
+  public List<Card> getCards() {
+    return cards;
+  }
+
+  public void setCards(List<Card> cards) {
+    this.cards = cards;
+  }
 }

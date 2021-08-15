@@ -11,113 +11,232 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class Github {
-    @Autowired
-    public Github(){}
 
-    @RequestMapping(value = "/api/github/{trelloKey}/{token}", method = RequestMethod.POST)
-    public void receiveGithubMessage(@RequestBody GhRoot message, @PathVariable String trelloKey,
-                                     @PathVariable String token, @RequestHeader("X-Github-Event") String event){
-        if (trelloKey != null && token != null && message.action != null && event != null){
-            if (event.equals("pull_request") && message.getAction().equals("opened")){
-                buildPrOpenComment(message, trelloKey, token);
-            }
+  @Autowired
+  public Github() {}
 
-            if (event.equals("pull_request") && message.getAction().equals("closed") && message.pull_request.merged){
-                buildPrMergedComment(message, trelloKey, token);
-            }
+  @RequestMapping(
+    value = "/api/github/{trelloKey}/{token}",
+    method = RequestMethod.POST
+  )
+  public void receiveGithubMessage(
+    @RequestBody GhRoot message,
+    @PathVariable String trelloKey,
+    @PathVariable String token,
+    @RequestHeader("X-Github-Event") String event
+  ) {
+    if (
+      trelloKey != null &&
+      token != null &&
+      message.action != null &&
+      event != null
+    ) {
+      if (
+        event.equals("pull_request") && message.getAction().equals("opened")
+      ) {
+        buildPrOpenComment(message, trelloKey, token);
+      }
 
-            if (event.equals("issue_comment") && message.getAction().equals("created") &&
-                    message.comment != null && message.issue != null){
+      if (
+        event.equals("pull_request") &&
+        message.getAction().equals("closed") &&
+        message.pull_request.merged
+      ) {
+        buildPrMergedComment(message, trelloKey, token);
+      }
 
-                // PR title needs to be the same as branch name and trello card
-                buildPrComment(message, trelloKey, token);
-            }
+      if (
+        event.equals("issue_comment") &&
+        message.getAction().equals("created") &&
+        message.comment != null &&
+        message.issue != null
+      ) {
+        // PR title needs to be the same as branch name and trello card
+        buildPrComment(message, trelloKey, token);
+      }
 
-            if (event.equals("pull_request_review") && message.getAction().equals("submitted")) {
-                buildPrReviewComment(message, trelloKey, token);
-            }
+      if (
+        event.equals("pull_request_review") &&
+        message.getAction().equals("submitted")
+      ) {
+        buildPrReviewComment(message, trelloKey, token);
+      }
 
-            if (event.equals("pull_request") && message.getAction().equals("closed") && !message.pull_request.merged){
-                buildPrClosedComment(message, trelloKey, token);
-            }
+      if (
+        event.equals("pull_request") &&
+        message.getAction().equals("closed") &&
+        !message.pull_request.merged
+      ) {
+        buildPrClosedComment(message, trelloKey, token);
+      }
+    }
+  }
+
+  private String getCardId(String name, String trelloKey, String token) {
+    RestTemplate restTemplate = new RestTemplate();
+    String cardId = "";
+    String url =
+      "https://api.trello.com/1/search?modelTypes=cards&query=" +
+      name +
+      "&key=" +
+      trelloKey +
+      "&token=" +
+      token;
+
+    Root root = restTemplate.getForObject(url, Root.class);
+
+    if (root != null) {
+      for (Card card : root.cards) {
+        if (card.name.equals(name)) {
+          cardId = card.id;
         }
+      }
     }
 
-    private String getCardId(String name, String trelloKey, String token) {
-        RestTemplate restTemplate = new RestTemplate();
-        String cardId = "";
-        String url = "https://api.trello.com/1/search?modelTypes=cards&query=" +
-                name + "&key=" + trelloKey + "&token=" + token;
+    return cardId;
+  }
 
-        Root root = restTemplate.getForObject(url, Root.class);
+  private void addCardAttachment(
+    String ID,
+    String attachmentURL,
+    String trelloKey,
+    String token
+  ) {
+    RestTemplate restTemplate = new RestTemplate();
+    String url =
+      "https://api.trello.com/1/cards/" +
+      ID +
+      "/attachments?key=" +
+      trelloKey +
+      "&token=" +
+      token;
+    Attachment attachment = new Attachment();
+    attachment.setUrl(attachmentURL);
 
-        if (root != null){
-            for (Card card : root.cards) {
-                if (card.name.equals(name)) {
-                    cardId = card.id;
-                }
-            }
-        }
-
-        return cardId;
+    if (ID.length() > 0) {
+      restTemplate.postForLocation(url, attachment);
     }
+  }
 
-    private void addCardAttachment(String ID, String attachmentURL, String trelloKey, String token) {
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "https://api.trello.com/1/cards/" +
-                ID + "/attachments?key=" + trelloKey + "&token=" + token;
-        Attachment attachment = new Attachment();
-        attachment.setUrl(attachmentURL);
+  private void addCardComment(
+    String ID,
+    String text,
+    String trelloKey,
+    String token
+  ) {
+    RestTemplate restTemplate = new RestTemplate();
+    String url =
+      "https://api.trello.com/1/cards/" +
+      ID +
+      "/actions/comments?key=" +
+      trelloKey +
+      "&token=" +
+      token;
+    Term term = new Term();
+    term.setText(text);
 
-        if (ID.length() > 0) {
-            restTemplate.postForLocation(url, attachment);
-        }
+    if (ID.length() > 0) {
+      restTemplate.postForLocation(url, term);
     }
+  }
 
-    private void addCardComment(String ID, String text, String trelloKey, String token) {
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "https://api.trello.com/1/cards/" +
-                ID + "/actions/comments?key=" + trelloKey + "&token=" + token;
-        Term term = new Term();
-        term.setText(text);
+  private void buildPrOpenComment(
+    GhRoot ghRoot,
+    String trelloKey,
+    String token
+  ) {
+    String comment = "Opened PR " + ghRoot.pull_request.html_url;
 
-        if (ID.length() > 0) {
-            restTemplate.postForLocation(url, term);
-        }
-    }
+    addCardAttachment(
+      getCardId(ghRoot.pull_request.head.ref, trelloKey, token),
+      ghRoot.pull_request.html_url,
+      trelloKey,
+      token
+    );
+    addCardComment(
+      getCardId(ghRoot.pull_request.head.ref, trelloKey, token),
+      comment,
+      trelloKey,
+      token
+    );
+  }
 
-    private void buildPrOpenComment(GhRoot ghRoot, String trelloKey, String token) {
-        String comment = "Opened PR " + ghRoot.pull_request.html_url;
+  private void buildPrMergedComment(
+    GhRoot ghRoot,
+    String trelloKey,
+    String token
+  ) {
+    String comment =
+      "Merged PR " +
+      ghRoot.pull_request.html_url +
+      " from " +
+      ghRoot.pull_request.merged_by.login;
 
-        addCardAttachment(getCardId(ghRoot.pull_request.head.ref, trelloKey, token),
-                ghRoot.pull_request.html_url, trelloKey, token);
-        addCardComment(getCardId(ghRoot.pull_request.head.ref, trelloKey, token), comment, trelloKey, token);
-    }
+    addCardComment(
+      getCardId(ghRoot.pull_request.head.ref, trelloKey, token),
+      comment,
+      trelloKey,
+      token
+    );
+  }
 
-    private void buildPrMergedComment(GhRoot ghRoot, String trelloKey, String token) {
-        String comment = "Merged PR " + ghRoot.pull_request.html_url + " from " + ghRoot.pull_request.merged_by.login;
+  private void buildPrReviewComment(
+    GhRoot ghRoot,
+    String trelloKey,
+    String token
+  ) {
+    String comment =
+      ghRoot.review.body +
+      " by Github user " +
+      ghRoot.review.user.login +
+      " reviewed on " +
+      ghRoot.pull_request.html_url +
+      ", review link -> " +
+      ghRoot.review.html_url;
 
-        addCardComment(getCardId(ghRoot.pull_request.head.ref, trelloKey, token), comment, trelloKey, token);
-    }
+    addCardComment(
+      getCardId(ghRoot.pull_request.head.ref, trelloKey, token),
+      comment,
+      trelloKey,
+      token
+    );
+  }
 
-    private void buildPrReviewComment(GhRoot ghRoot, String trelloKey, String token) {
-        String comment = ghRoot.review.body + " by Github user " + ghRoot.review.user.login +
-                " reviewed on " + ghRoot.pull_request.html_url + ", review link -> " + ghRoot.review.html_url;
+  private void buildPrComment(GhRoot ghRoot, String trelloKey, String token) {
+    String comment =
+      "Github User " +
+      ghRoot.comment.user.login +
+      " commented " +
+      ghRoot.comment.body +
+      " on " +
+      ghRoot.issue.html_url +
+      ", comment link -> " +
+      ghRoot.comment.html_url;
 
-        addCardComment(getCardId(ghRoot.pull_request.head.ref, trelloKey, token), comment, trelloKey, token);
-    }
+    addCardComment(
+      getCardId(ghRoot.issue.title, trelloKey, token),
+      comment,
+      trelloKey,
+      token
+    );
+  }
 
-    private void buildPrComment(GhRoot ghRoot, String trelloKey, String token) {
-        String comment = "Github User " + ghRoot.comment.user.login + " commented " +
-                ghRoot.comment.body + " on " + ghRoot.issue.html_url + ", comment link -> " + ghRoot.comment.html_url;
+  private void buildPrClosedComment(
+    GhRoot ghRoot,
+    String trelloKey,
+    String token
+  ) {
+    String comment =
+      "Closed PR " +
+      ghRoot.pull_request.html_url +
+      " was not merged, from " +
+      ghRoot.pull_request.merged_by.login;
 
-        addCardComment(getCardId(ghRoot.issue.title, trelloKey, token), comment, trelloKey, token);
-    }
-
-    private void buildPrClosedComment(GhRoot ghRoot, String trelloKey, String token) {
-        String comment = "Closed PR " + ghRoot.pull_request.html_url + " was not merged, from " +
-                ghRoot.pull_request.merged_by.login;
-
-        addCardComment(getCardId(ghRoot.pull_request.head.ref, trelloKey, token), comment, trelloKey, token);
-    }
+    addCardComment(
+      getCardId(ghRoot.pull_request.head.ref, trelloKey, token),
+      comment,
+      trelloKey,
+      token
+    );
+  }
 }

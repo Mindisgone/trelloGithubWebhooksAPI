@@ -3,43 +3,43 @@ package com.teeceetech.trellogithubwebhooksapi.web.models.trello;
 import java.util.List;
 
 public class Options {
-    public List<Term> terms;
-    public List<Object> modifiers;
-    public List<String> modelTypes;
-    public boolean partial;
 
-    public Options() {
-    }
+  public List<Term> terms;
+  public List<Object> modifiers;
+  public List<String> modelTypes;
+  public boolean partial;
 
-    public List<Term> getTerms() {
-        return terms;
-    }
+  public Options() {}
 
-    public void setTerms(List<Term> terms) {
-        this.terms = terms;
-    }
+  public List<Term> getTerms() {
+    return terms;
+  }
 
-    public List<Object> getModifiers() {
-        return modifiers;
-    }
+  public void setTerms(List<Term> terms) {
+    this.terms = terms;
+  }
 
-    public void setModifiers(List<Object> modifiers) {
-        this.modifiers = modifiers;
-    }
+  public List<Object> getModifiers() {
+    return modifiers;
+  }
 
-    public List<String> getModelTypes() {
-        return modelTypes;
-    }
+  public void setModifiers(List<Object> modifiers) {
+    this.modifiers = modifiers;
+  }
 
-    public void setModelTypes(List<String> modelTypes) {
-        this.modelTypes = modelTypes;
-    }
+  public List<String> getModelTypes() {
+    return modelTypes;
+  }
 
-    public boolean isPartial() {
-        return partial;
-    }
+  public void setModelTypes(List<String> modelTypes) {
+    this.modelTypes = modelTypes;
+  }
 
-    public void setPartial(boolean partial) {
-        this.partial = partial;
-    }
+  public boolean isPartial() {
+    return partial;
+  }
+
+  public void setPartial(boolean partial) {
+    this.partial = partial;
+  }
 }

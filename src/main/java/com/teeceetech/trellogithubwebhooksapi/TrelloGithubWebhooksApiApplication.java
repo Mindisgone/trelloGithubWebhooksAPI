@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class TrelloGithubWebhooksApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TrelloGithubWebhooksApiApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(TrelloGithubWebhooksApiApplication.class, args);
+  }
 }
