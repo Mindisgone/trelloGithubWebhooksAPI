@@ -15,28 +15,29 @@ public class Github {
     public Github(){}
 
     @RequestMapping(value = "/api/github/{trelloKey}/{token}", method = RequestMethod.POST)
-    public void receiveGithubMessage(@RequestBody GhRoot message, @PathVariable String trelloKey, @PathVariable String token){
-        if (trelloKey != null && token != null){
-            if (message.action != null && message.getAction().equals("opened")){
+    public void receiveGithubMessage(@RequestBody GhRoot message, @PathVariable String trelloKey,
+                                     @PathVariable String token, @RequestHeader("X-Github-Event") String event){
+        if (trelloKey != null && token != null && message.action != null && event != null){
+            if (event.equals("pull_request") && message.getAction().equals("opened")){
                 buildPrOpenComment(message, trelloKey, token);
             }
 
-            if (message.action != null && message.getAction().equals("closed") && message.pull_request.merged){
+            if (event.equals("pull_request") && message.getAction().equals("closed") && message.pull_request.merged){
                 buildPrMergedComment(message, trelloKey, token);
             }
 
-            if (message.action != null && message.getAction().equals("created") &&
+            if (event.equals("comment") && message.getAction().equals("created") &&
                     message.comment != null && message.issue != null){
 
                 // PR title needs to be the same as branch name and trello card
                 buildPrComment(message, trelloKey, token);
             }
 
-            if (message.action != null && message.getAction().equals("submitted")) {
+            if (event.equals("pull_request_review") && message.getAction().equals("submitted")) {
                 buildPrReviewComment(message, trelloKey, token);
             }
 
-            if (message.action != null && message.getAction().equals("closed") && !message.pull_request.merged){
+            if (event.equals("pull_request") && message.getAction().equals("closed") && !message.pull_request.merged){
                 buildPrClosedComment(message, trelloKey, token);
             }
         }
