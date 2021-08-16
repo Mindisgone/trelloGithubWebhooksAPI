@@ -1,10 +1,10 @@
 package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 
-public class GhHtml {
+public class Comments {
 
   public String href;
 
-  public GhHtml() {}
+  public Comments() {}
 
   public String getHref() {
     return href;

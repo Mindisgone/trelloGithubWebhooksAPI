@@ -1,22 +1,22 @@
 package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 
-public class GhRoot {
+public class Root {
 
   public String action;
   // used only for pull request events
   public int number;
   // used only for review events
-  public GhReview review;
+  public Review review;
   // used only for comment events
-  public GhIssue issue;
+  public Issue issue;
   // used only for comment events
-  public GhComment comment;
+  public Comment comment;
   // not used for comment events
-  public GhPullRequest pull_request;
-  public GhRepository repository;
-  public GhSender sender;
+  public PullRequest pull_request;
+  public Repository repository;
+  public Sender sender;
 
-  public GhRoot() {}
+  public Root() {}
 
   public String getAction() {
     return action;
@@ -26,27 +26,27 @@ public class GhRoot {
     return number;
   }
 
-  public GhReview getReview() {
+  public Review getReview() {
     return review;
   }
 
-  public GhIssue getIssue() {
+  public Issue getIssue() {
     return issue;
   }
 
-  public GhComment getComment() {
+  public Comment getComment() {
     return comment;
   }
 
-  public GhPullRequest getPull_request() {
+  public PullRequest getPull_request() {
     return pull_request;
   }
 
-  public GhRepository getRepository() {
+  public Repository getRepository() {
     return repository;
   }
 
-  public GhSender getSender() {
+  public Sender getSender() {
     return sender;
   }
 }

@@ -1,10 +1,10 @@
 package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 
-public class GhStatuses {
+public class Html {
 
   public String href;
 
-  public GhStatuses() {}
+  public Html() {}
 
   public String getHref() {
     return href;

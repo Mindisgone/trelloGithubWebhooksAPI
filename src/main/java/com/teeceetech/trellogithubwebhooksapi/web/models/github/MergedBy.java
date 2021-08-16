@@ -1,6 +1,6 @@
 package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 
-public class GhMergedBy {
+public class MergedBy {
 
   public String login;
   public int id;
@@ -21,7 +21,7 @@ public class GhMergedBy {
   public String type;
   public boolean site_admin;
 
-  public GhMergedBy() {}
+  public MergedBy() {}
 
   public String getLogin() {
     return login;

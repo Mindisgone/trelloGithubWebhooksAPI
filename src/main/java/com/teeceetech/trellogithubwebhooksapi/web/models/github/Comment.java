@@ -2,21 +2,21 @@ package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 
 import java.util.Date;
 
-public class GhComment {
+public class Comment {
 
   public String url;
   public String html_url;
   public String issue_url;
   public int id;
   public String node_id;
-  public GhUser user;
+  public User user;
   public Date created_at;
   public Date updated_at;
   public String author_association;
   public String body;
   public Object performed_via_github_app;
 
-  public GhComment() {}
+  public Comment() {}
 
   public String getUrl() {
     return url;
@@ -38,7 +38,7 @@ public class GhComment {
     return node_id;
   }
 
-  public GhUser getUser() {
+  public User getUser() {
     return user;
   }
 

@@ -3,7 +3,7 @@ package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 import java.util.Date;
 import java.util.List;
 
-public class GhIssue {
+public class Issue {
 
   public String url;
   public String repository_url;
@@ -15,12 +15,12 @@ public class GhIssue {
   public String node_id;
   public int number;
   public String title;
-  public GhUser user;
+  public User user;
   public List<Object> labels;
   public String state;
   public boolean locked;
-  public GhAssignee assignee;
-  public List<GhAssignee> assignees;
+  public Assignee assignee;
+  public List<Assignee> assignees;
   public Object milestone;
   public int comments;
   public Date created_at;
@@ -28,11 +28,11 @@ public class GhIssue {
   public Object closed_at;
   public String author_association;
   public Object active_lock_reason;
-  public GhPullRequest pull_request;
+  public PullRequest pull_request;
   public String body;
   public Object performed_via_github_app;
 
-  public GhIssue() {}
+  public Issue() {}
 
   public String getUrl() {
     return url;
@@ -74,7 +74,7 @@ public class GhIssue {
     return title;
   }
 
-  public GhUser getUser() {
+  public User getUser() {
     return user;
   }
 
@@ -90,11 +90,11 @@ public class GhIssue {
     return locked;
   }
 
-  public GhAssignee getAssignee() {
+  public Assignee getAssignee() {
     return assignee;
   }
 
-  public List<GhAssignee> getAssignees() {
+  public List<Assignee> getAssignees() {
     return assignees;
   }
 
@@ -126,7 +126,7 @@ public class GhIssue {
     return active_lock_reason;
   }
 
-  public GhPullRequest getPull_request() {
+  public PullRequest getPull_request() {
     return pull_request;
   }
 

@@ -1,6 +1,6 @@
 package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 
-public class GhAssignee {
+public class User {
 
   public String login;
   public int id;
@@ -21,7 +21,7 @@ public class GhAssignee {
   public String type;
   public boolean site_admin;
 
-  public GhAssignee() {}
+  public User() {}
 
   public String getLogin() {
     return login;
