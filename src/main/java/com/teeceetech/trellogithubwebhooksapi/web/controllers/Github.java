@@ -1,15 +1,20 @@
 package com.teeceetech.trellogithubwebhooksapi.web.controllers;
 
+import com.teeceetech.trellogithubwebhooksapi.handlers.RestTemplateErrorHandler;
 import com.teeceetech.trellogithubwebhooksapi.web.models.github.Attachment;
 import com.teeceetech.trellogithubwebhooksapi.web.models.github.Root;
 import com.teeceetech.trellogithubwebhooksapi.web.models.trello.Card;
 import com.teeceetech.trellogithubwebhooksapi.web.models.trello.Term;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class Github {
+
+  static final Logger logger = LoggerFactory.getLogger(Github.class);
 
   @Autowired
   public Github() {}
@@ -68,11 +73,21 @@ public class Github {
       ) {
         buildPrClosedComment(payload, trelloKey, token);
       }
+    } else {
+      logger.warn(
+        "Bad request, header: {}, payload exists: {}, trello key exists: {}, trello token exists: {}",
+        event,
+        payload != null,
+        trelloKey != null,
+        token != null
+      );
     }
   }
 
   private String getCardId(String name, String trelloKey, String token) {
     RestTemplate restTemplate = new RestTemplate();
+    restTemplate.setErrorHandler(new RestTemplateErrorHandler());
+
     String cardId = "";
     String url =
       "https://api.trello.com/1/search?modelTypes=cards&query=" +
@@ -91,8 +106,11 @@ public class Github {
       for (Card card : root.cards) {
         if (card.name.equals(name)) {
           cardId = card.id;
+          logger.info("Trello card found");
         }
       }
+    } else {
+      logger.warn("Cannot retrieve Trello card, response does not exist");
     }
 
     return cardId;
@@ -105,6 +123,8 @@ public class Github {
     String token
   ) {
     RestTemplate restTemplate = new RestTemplate();
+    restTemplate.setErrorHandler(new RestTemplateErrorHandler());
+
     String url =
       "https://api.trello.com/1/cards/" +
       ID +
@@ -117,6 +137,9 @@ public class Github {
 
     if (ID.length() > 0) {
       restTemplate.postForLocation(url, attachment);
+      logger.info("Link attached to Trello card");
+    } else {
+      logger.warn("Trello card ID invalid, cannot attach link");
     }
   }
 
@@ -127,6 +150,8 @@ public class Github {
     String token
   ) {
     RestTemplate restTemplate = new RestTemplate();
+    restTemplate.setErrorHandler(new RestTemplateErrorHandler());
+
     String url =
       "https://api.trello.com/1/cards/" +
       ID +
@@ -139,6 +164,9 @@ public class Github {
 
     if (ID.length() > 0) {
       restTemplate.postForLocation(url, term);
+      logger.info("Comment added to Trello card");
+    } else {
+      logger.warn("Trello card ID invalid, cannot add comment");
     }
   }
 
