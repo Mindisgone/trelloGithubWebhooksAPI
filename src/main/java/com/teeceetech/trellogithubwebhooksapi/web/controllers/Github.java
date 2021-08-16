@@ -82,7 +82,10 @@ public class Github {
       "&token=" +
       token;
 
-    com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root root = restTemplate.getForObject(url, com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root.class);
+    com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root root = restTemplate.getForObject(
+      url,
+      com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root.class
+    );
 
     if (root != null) {
       for (Card card : root.cards) {
