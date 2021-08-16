@@ -4,7 +4,8 @@
   "scripts": {
     "build": "gradle build",
     "test": "gradle test",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prettier": "npx prettier --write **/*.java"
   },
   "private": true,
   "devDependencies": {
