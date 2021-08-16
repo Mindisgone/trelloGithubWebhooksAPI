@@ -2,10 +2,17 @@
 
 To get up and running, install the npm package and run the full build:
 
-:heavy_exclamation_mark:INSERT SNIPPET:heavy_exclamation_mark:
+```
+npm i trellogithubapi
+
+npm run build
+```
 
 ## Testing your changes
 
 ### Unit Testing
 
 ## Formatting
+
+**Prettier formatting is used with the community
+[Java plugin](https://github.com/jhipster/prettier-java)**
