@@ -260,7 +260,7 @@ public class Github {
       "Closed PR " +
       payload.pull_request.html_url +
       " was not merged, from " +
-      payload.pull_request.merged_by.login;
+      payload.pull_request.user.login;
 
     addCardComment(
       getCardId(payload.pull_request.head.ref, trelloKey, token),
