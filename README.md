@@ -42,7 +42,14 @@ installations.
 ## Usage
 
 > **This API does not store or log personal data (ie. your Trello key
-> and token) in any way**
+> and token) in any way:heavy_exclamation_mark:**
+>
+> **When using this API keep in mind there are limits on the amount of
+> Butler tasks you are allowed per month depending on your Trello
+> account, see
+> [Trello docs](https://help.trello.com/article/1181-butler-features-and-quotas)
+> for more details**
+> ![Butler Quotas](.docs/butler_quotas.png)
 
 In order to use the API you must:
 
@@ -50,7 +57,7 @@ In order to use the API you must:
    [Instructions](https://developer.atlassian.com/cloud/trello/guides/rest-api/api-introduction/)
 2. Create a new webhook for your Github repository using the following
    settings:
-   * :heavy_exclamation_mark:INSERT PICTURE:heavy_exclamation_mark:
+   * ![Webhooks Config](.docs/webhooks_config.png)
    * Where ```TRELLO_KEY``` is your Trello API key and
      ```TRELLO_TOKEN``` is your Trello API app token
 3. Be sure to **name your git branches exactly the same as the Trello
@@ -90,7 +97,7 @@ This example will achieve the following automation:
 
 Your Trello automation rules will look similar to the following:
 
-:heavy_exclamation_mark:INSERT PICTURE:heavy_exclamation_mark:
+![Butler Rules Example](.docs/butler_rules_example.png)
 
 ## Contributing
 
