@@ -55,7 +55,6 @@ public class Github {
         payload.comment != null &&
         payload.issue != null
       ) {
-        // PR title needs to be the same as branch name and trello card
         buildPrComment(payload, trelloKey, token);
       }
 
@@ -244,7 +243,7 @@ public class Github {
       payload.comment.html_url;
 
     addCardComment(
-      getCardId(payload.issue.title, trelloKey, token),
+      getCardId(payload.issue.pull_request.head.ref, trelloKey, token),
       comment,
       trelloKey,
       token
