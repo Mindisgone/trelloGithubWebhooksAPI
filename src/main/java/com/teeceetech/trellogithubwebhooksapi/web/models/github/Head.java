@@ -1,14 +1,14 @@
 package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 
-public class GhHead {
+public class Head {
 
   public String label;
   public String ref;
   public String sha;
-  public GhUser user;
-  public GhRepo repo;
+  public User user;
+  public Repo repo;
 
-  public GhHead() {}
+  public Head() {}
 
   public String getLabel() {
     return label;
@@ -22,11 +22,11 @@ public class GhHead {
     return sha;
   }
 
-  public GhUser getUser() {
+  public User getUser() {
     return user;
   }
 
-  public GhRepo getRepo() {
+  public Repo getRepo() {
     return repo;
   }
 }

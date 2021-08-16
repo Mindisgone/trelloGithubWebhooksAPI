@@ -3,7 +3,7 @@ package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 import java.util.Date;
 import java.util.List;
 
-public class GhPullRequest {
+public class PullRequest {
 
   public String url;
   public int id;
@@ -16,15 +16,15 @@ public class GhPullRequest {
   public String state;
   public boolean locked;
   public String title;
-  public GhUser user;
+  public User user;
   public String body;
   public Date created_at;
   public Date updated_at;
   public Date closed_at;
   public Date merged_at;
   public String merge_commit_sha;
-  public GhAssignee assignee;
-  public List<GhAssignee> assignees;
+  public Assignee assignee;
+  public List<Assignee> assignees;
   public List<Object> requested_reviewers;
   public List<Object> requested_teams;
   public List<Object> labels;
@@ -35,9 +35,9 @@ public class GhPullRequest {
   public String review_comment_url;
   public String comments_url;
   public String statuses_url;
-  public GhHead head;
-  public GhBase base;
-  public GhLinks _links;
+  public Head head;
+  public Base base;
+  public Links _links;
   public String author_association;
   public Object auto_merge;
   public Object active_lock_reason;
@@ -45,7 +45,7 @@ public class GhPullRequest {
   public Object mergeable;
   public Object rebaseable;
   public String mergeable_state;
-  public GhMergedBy merged_by;
+  public MergedBy merged_by;
   public int comments;
   public int review_comments;
   public boolean maintainer_can_modify;
@@ -54,7 +54,7 @@ public class GhPullRequest {
   public int deletions;
   public int changed_files;
 
-  public GhPullRequest() {}
+  public PullRequest() {}
 
   public String getUrl() {
     return url;
@@ -100,7 +100,7 @@ public class GhPullRequest {
     return title;
   }
 
-  public GhUser getUser() {
+  public User getUser() {
     return user;
   }
 
@@ -128,11 +128,11 @@ public class GhPullRequest {
     return merge_commit_sha;
   }
 
-  public GhAssignee getAssignee() {
+  public Assignee getAssignee() {
     return assignee;
   }
 
-  public List<GhAssignee> getAssignees() {
+  public List<Assignee> getAssignees() {
     return assignees;
   }
 
@@ -176,15 +176,15 @@ public class GhPullRequest {
     return statuses_url;
   }
 
-  public GhHead getHead() {
+  public Head getHead() {
     return head;
   }
 
-  public GhBase getBase() {
+  public Base getBase() {
     return base;
   }
 
-  public GhLinks get_links() {
+  public Links get_links() {
     return _links;
   }
 
@@ -216,7 +216,7 @@ public class GhPullRequest {
     return mergeable_state;
   }
 
-  public GhMergedBy getMerged_by() {
+  public MergedBy getMerged_by() {
     return merged_by;
   }
 

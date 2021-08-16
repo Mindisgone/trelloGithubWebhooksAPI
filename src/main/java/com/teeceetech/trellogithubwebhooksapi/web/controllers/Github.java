@@ -1,9 +1,8 @@
 package com.teeceetech.trellogithubwebhooksapi.web.controllers;
 
 import com.teeceetech.trellogithubwebhooksapi.web.models.github.Attachment;
-import com.teeceetech.trellogithubwebhooksapi.web.models.github.GhRoot;
+import com.teeceetech.trellogithubwebhooksapi.web.models.github.Root;
 import com.teeceetech.trellogithubwebhooksapi.web.models.trello.Card;
-import com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root;
 import com.teeceetech.trellogithubwebhooksapi.web.models.trello.Term;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,7 @@ public class Github {
     method = RequestMethod.POST
   )
   public void receiveGithubMessage(
-    @RequestBody GhRoot message,
+    @RequestBody Root payload,
     @PathVariable String trelloKey,
     @PathVariable String token,
     @RequestHeader("X-Github-Event") String event
@@ -28,46 +27,46 @@ public class Github {
     if (
       trelloKey != null &&
       token != null &&
-      message.action != null &&
+      payload.action != null &&
       event != null
     ) {
       if (
-        event.equals("pull_request") && message.getAction().equals("opened")
+        event.equals("pull_request") && payload.getAction().equals("opened")
       ) {
-        buildPrOpenComment(message, trelloKey, token);
+        buildPrOpenComment(payload, trelloKey, token);
       }
 
       if (
         event.equals("pull_request") &&
-        message.getAction().equals("closed") &&
-        message.pull_request.merged
+        payload.getAction().equals("closed") &&
+        payload.pull_request.merged
       ) {
-        buildPrMergedComment(message, trelloKey, token);
+        buildPrMergedComment(payload, trelloKey, token);
       }
 
       if (
         event.equals("issue_comment") &&
-        message.getAction().equals("created") &&
-        message.comment != null &&
-        message.issue != null
+        payload.getAction().equals("created") &&
+        payload.comment != null &&
+        payload.issue != null
       ) {
         // PR title needs to be the same as branch name and trello card
-        buildPrComment(message, trelloKey, token);
+        buildPrComment(payload, trelloKey, token);
       }
 
       if (
         event.equals("pull_request_review") &&
-        message.getAction().equals("submitted")
+        payload.getAction().equals("submitted")
       ) {
-        buildPrReviewComment(message, trelloKey, token);
+        buildPrReviewComment(payload, trelloKey, token);
       }
 
       if (
         event.equals("pull_request") &&
-        message.getAction().equals("closed") &&
-        !message.pull_request.merged
+        payload.getAction().equals("closed") &&
+        !payload.pull_request.merged
       ) {
-        buildPrClosedComment(message, trelloKey, token);
+        buildPrClosedComment(payload, trelloKey, token);
       }
     }
   }
@@ -83,7 +82,10 @@ public class Github {
       "&token=" +
       token;
 
-    Root root = restTemplate.getForObject(url, Root.class);
+    com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root root = restTemplate.getForObject(
+      url,
+      com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root.class
+    );
 
     if (root != null) {
       for (Card card : root.cards) {
@@ -141,20 +143,20 @@ public class Github {
   }
 
   private void buildPrOpenComment(
-    GhRoot ghRoot,
+    Root payload,
     String trelloKey,
     String token
   ) {
-    String comment = "Opened PR " + ghRoot.pull_request.html_url;
+    String comment = "Opened PR " + payload.pull_request.html_url;
 
     addCardAttachment(
-      getCardId(ghRoot.pull_request.head.ref, trelloKey, token),
-      ghRoot.pull_request.html_url,
+      getCardId(payload.pull_request.head.ref, trelloKey, token),
+      payload.pull_request.html_url,
       trelloKey,
       token
     );
     addCardComment(
-      getCardId(ghRoot.pull_request.head.ref, trelloKey, token),
+      getCardId(payload.pull_request.head.ref, trelloKey, token),
       comment,
       trelloKey,
       token
@@ -162,18 +164,18 @@ public class Github {
   }
 
   private void buildPrMergedComment(
-    GhRoot ghRoot,
+    Root payload,
     String trelloKey,
     String token
   ) {
     String comment =
       "Merged PR " +
-      ghRoot.pull_request.html_url +
+      payload.pull_request.html_url +
       " from " +
-      ghRoot.pull_request.merged_by.login;
+      payload.pull_request.merged_by.login;
 
     addCardComment(
-      getCardId(ghRoot.pull_request.head.ref, trelloKey, token),
+      getCardId(payload.pull_request.head.ref, trelloKey, token),
       comment,
       trelloKey,
       token
@@ -181,40 +183,40 @@ public class Github {
   }
 
   private void buildPrReviewComment(
-    GhRoot ghRoot,
+    Root payload,
     String trelloKey,
     String token
   ) {
     String comment =
-      ghRoot.review.body +
+      payload.review.body +
       " by Github user " +
-      ghRoot.review.user.login +
+      payload.review.user.login +
       " reviewed on " +
-      ghRoot.pull_request.html_url +
+      payload.pull_request.html_url +
       ", review link -> " +
-      ghRoot.review.html_url;
+      payload.review.html_url;
 
     addCardComment(
-      getCardId(ghRoot.pull_request.head.ref, trelloKey, token),
+      getCardId(payload.pull_request.head.ref, trelloKey, token),
       comment,
       trelloKey,
       token
     );
   }
 
-  private void buildPrComment(GhRoot ghRoot, String trelloKey, String token) {
+  private void buildPrComment(Root payload, String trelloKey, String token) {
     String comment =
       "Github User " +
-      ghRoot.comment.user.login +
+      payload.comment.user.login +
       " commented " +
-      ghRoot.comment.body +
+      payload.comment.body +
       " on " +
-      ghRoot.issue.html_url +
+      payload.issue.html_url +
       ", comment link -> " +
-      ghRoot.comment.html_url;
+      payload.comment.html_url;
 
     addCardComment(
-      getCardId(ghRoot.issue.title, trelloKey, token),
+      getCardId(payload.issue.title, trelloKey, token),
       comment,
       trelloKey,
       token
@@ -222,18 +224,18 @@ public class Github {
   }
 
   private void buildPrClosedComment(
-    GhRoot ghRoot,
+    Root payload,
     String trelloKey,
     String token
   ) {
     String comment =
       "Closed PR " +
-      ghRoot.pull_request.html_url +
+      payload.pull_request.html_url +
       " was not merged, from " +
-      ghRoot.pull_request.merged_by.login;
+      payload.pull_request.merged_by.login;
 
     addCardComment(
-      getCardId(ghRoot.pull_request.head.ref, trelloKey, token),
+      getCardId(payload.pull_request.head.ref, trelloKey, token),
       comment,
       trelloKey,
       token

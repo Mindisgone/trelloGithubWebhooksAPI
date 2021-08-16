@@ -1,10 +1,10 @@
 package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 
-public class GhCommits {
+public class Statuses {
 
   public String href;
 
-  public GhCommits() {}
+  public Statuses() {}
 
   public String getHref() {
     return href;

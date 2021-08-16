@@ -2,11 +2,11 @@ package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 
 import java.util.Date;
 
-public class GhReview {
+public class Review {
 
   public int id;
   public String node_id;
-  public GhUser user;
+  public User user;
   public String body;
   public String commit_id;
   public Date submitted_at;
@@ -14,9 +14,9 @@ public class GhReview {
   public String html_url;
   public String pull_request_url;
   public String author_association;
-  public GhLinks _links;
+  public Links _links;
 
-  public GhReview() {}
+  public Review() {}
 
   public int getId() {
     return id;
@@ -26,7 +26,7 @@ public class GhReview {
     return node_id;
   }
 
-  public GhUser getUser() {
+  public User getUser() {
     return user;
   }
 
@@ -58,7 +58,7 @@ public class GhReview {
     return author_association;
   }
 
-  public GhLinks get_links() {
+  public Links get_links() {
     return _links;
   }
 }

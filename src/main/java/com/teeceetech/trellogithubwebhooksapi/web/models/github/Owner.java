@@ -1,6 +1,6 @@
 package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 
-public class GhSender {
+public class Owner {
 
   public String login;
   public int id;
@@ -21,7 +21,7 @@ public class GhSender {
   public String type;
   public boolean site_admin;
 
-  public GhSender() {}
+  public Owner() {}
 
   public String getLogin() {
     return login;

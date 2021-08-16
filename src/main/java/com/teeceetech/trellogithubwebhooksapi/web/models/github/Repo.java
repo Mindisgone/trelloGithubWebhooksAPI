@@ -2,7 +2,7 @@ package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 
 import java.util.Date;
 
-public class GhRepo {
+public class Repo {
 
   public int id;
   public String node_id;
@@ -10,7 +10,7 @@ public class GhRepo {
   public String full_name;
   //  original property name from Github payload is called 'private' which is a protected name that cannot be used
   public boolean privateBool;
-  public GhOwner owner;
+  public Owner owner;
   public String html_url;
   public String description;
   public boolean fork;
@@ -84,7 +84,7 @@ public class GhRepo {
   public boolean allow_auto_merge;
   public boolean delete_branch_on_merge;
 
-  public GhRepo() {}
+  public Repo() {}
 
   public int getId() {
     return id;
@@ -106,7 +106,7 @@ public class GhRepo {
     return privateBool;
   }
 
-  public GhOwner getOwner() {
+  public Owner getOwner() {
     return owner;
   }
 
