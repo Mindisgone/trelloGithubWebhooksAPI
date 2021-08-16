@@ -20,7 +20,7 @@ public class Github {
   public Github() {}
 
   @RequestMapping(
-    value = "/api/github/{trelloKey}/{token}",
+    value = "/api/{trelloKey}/{token}",
     method = RequestMethod.POST
   )
   public void receiveGithubMessage(
