@@ -44,7 +44,9 @@ public class TrelloService {
         }
       }
     } else {
-      logger.warn("Did not get response from Trello API when retrieving card ID");
+      logger.warn(
+        "Did not get response from Trello API when retrieving card ID"
+      );
     }
 
     return cardId;
@@ -78,7 +80,9 @@ public class TrelloService {
         logger.info("Link added to Trello card, response = " + response);
         return true;
       } else {
-        logger.warn("Attach link to Trello card failed, response = " + response);
+        logger.warn(
+          "Attach link to Trello card failed, response = " + response
+        );
         return false;
       }
     } else {
