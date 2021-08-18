@@ -74,7 +74,7 @@ public class EventService {
         !payload.pull_request.merged
       ) {
         return Arrays.asList(
-          builderService.buildPrClosedComment(payload, trelloKey, token)
+          builderService.buildClosePullRequest(payload, trelloKey, token)
         );
       }
     } else {

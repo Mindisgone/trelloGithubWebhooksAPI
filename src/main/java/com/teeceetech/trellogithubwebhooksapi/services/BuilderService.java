@@ -111,7 +111,7 @@ public class BuilderService {
     );
   }
 
-  public Boolean buildPrClosedComment(
+  public Boolean buildClosePullRequest(
     Root payload,
     String trelloKey,
     String token

@@ -44,7 +44,7 @@ public class TrelloService {
         }
       }
     } else {
-      logger.warn("Cannot retrieve Trello card, response does not exist");
+      logger.warn("Did not get response from Trello API when retrieving card ID");
     }
 
     return cardId;
@@ -70,14 +70,15 @@ public class TrelloService {
     attachment.setUrl(attachmentURL);
 
     if (ID.length() > 0) {
-      String response = restTemplate
+      int response = restTemplate
         .postForEntity(url, attachment, String.class)
-        .getBody();
+        .getStatusCodeValue();
 
-      if (response != null && response.equals("Success")) {
+      if (response == 200) {
+        logger.info("Link added to Trello card, response = " + response);
         return true;
       } else {
-        logger.warn("Post to Trello API failed -> " + response);
+        logger.warn("Attach link to Trello card failed, response = " + response);
         return false;
       }
     } else {
@@ -106,15 +107,15 @@ public class TrelloService {
     term.setText(text);
 
     if (ID.length() > 0) {
-      String response = restTemplate
+      int response = restTemplate
         .postForEntity(url, term, String.class)
-        .getBody();
+        .getStatusCodeValue();
 
-      if (response != null && response.equals("Success")) {
-        logger.info("Comment added to Trello card");
+      if (response == 200) {
+        logger.info("Comment added to Trello card, response = " + response);
         return true;
       } else {
-        logger.warn("Post to Trello API failed -> " + response);
+        logger.warn("Comment to Trello API failed -> " + response);
         return false;
       }
     } else {
