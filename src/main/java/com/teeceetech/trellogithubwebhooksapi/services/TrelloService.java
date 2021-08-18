@@ -13,110 +13,113 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class TrelloService {
 
-    static final Logger logger = LoggerFactory.getLogger(TrelloService.class);
+  static final Logger logger = LoggerFactory.getLogger(TrelloService.class);
 
-    @Autowired
-    public TrelloService() {
-    }
+  @Autowired
+  public TrelloService() {}
 
-    public String getCardId(String name, String trelloKey, String token) {
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setErrorHandler(new RestTemplateErrorHandler());
+  public String getCardId(String name, String trelloKey, String token) {
+    RestTemplate restTemplate = new RestTemplate();
+    restTemplate.setErrorHandler(new RestTemplateErrorHandler());
 
-        String cardId = "";
-        String url =
-                "https://api.trello.com/1/search?modelTypes=cards&query=" +
-                        name +
-                        "&key=" +
-                        trelloKey +
-                        "&token=" +
-                        token;
+    String cardId = "";
+    String url =
+      "https://api.trello.com/1/search?modelTypes=cards&query=" +
+      name +
+      "&key=" +
+      trelloKey +
+      "&token=" +
+      token;
 
-        com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root root = restTemplate.getForObject(
-                url,
-                com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root.class
-        );
+    com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root root = restTemplate.getForObject(
+      url,
+      com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root.class
+    );
 
-        if (root != null) {
-            for (Card card : root.cards) {
-                if (card.name.equals(name)) {
-                    cardId = card.id;
-                    logger.info("Trello card found");
-                }
-            }
-        } else {
-            logger.warn("Cannot retrieve Trello card, response does not exist");
+    if (root != null) {
+      for (Card card : root.cards) {
+        if (card.name.equals(name)) {
+          cardId = card.id;
+          logger.info("Trello card found");
         }
-
-        return cardId;
+      }
+    } else {
+      logger.warn("Cannot retrieve Trello card, response does not exist");
     }
 
-    public Boolean addCardAttachment(
-            String ID,
-            String attachmentURL,
-            String trelloKey,
-            String token
-    ) {
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setErrorHandler(new RestTemplateErrorHandler());
+    return cardId;
+  }
 
-        String url =
-                "https://api.trello.com/1/cards/" +
-                        ID +
-                        "/attachments?key=" +
-                        trelloKey +
-                        "&token=" +
-                        token;
-        Attachment attachment = new Attachment();
-        attachment.setUrl(attachmentURL);
+  public Boolean addCardAttachment(
+    String ID,
+    String attachmentURL,
+    String trelloKey,
+    String token
+  ) {
+    RestTemplate restTemplate = new RestTemplate();
+    restTemplate.setErrorHandler(new RestTemplateErrorHandler());
 
-        if (ID.length() > 0) {
-            String response = restTemplate.postForEntity(url, attachment, String.class).getBody();
+    String url =
+      "https://api.trello.com/1/cards/" +
+      ID +
+      "/attachments?key=" +
+      trelloKey +
+      "&token=" +
+      token;
+    Attachment attachment = new Attachment();
+    attachment.setUrl(attachmentURL);
 
-            if (response != null && response.equals("Success")){
-                return true;
-            } else {
-                logger.warn("Post to Trello API failed -> " + response);
-                return false;
-            }
-        } else {
-            logger.warn("Trello card ID invalid, cannot attach link -> " + ID);
-            return false;
-        }
+    if (ID.length() > 0) {
+      String response = restTemplate
+        .postForEntity(url, attachment, String.class)
+        .getBody();
+
+      if (response != null && response.equals("Success")) {
+        return true;
+      } else {
+        logger.warn("Post to Trello API failed -> " + response);
+        return false;
+      }
+    } else {
+      logger.warn("Trello card ID invalid, cannot attach link -> " + ID);
+      return false;
     }
+  }
 
-    public Boolean addCardComment(
-            String ID,
-            String text,
-            String trelloKey,
-            String token
-    ) {
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setErrorHandler(new RestTemplateErrorHandler());
+  public Boolean addCardComment(
+    String ID,
+    String text,
+    String trelloKey,
+    String token
+  ) {
+    RestTemplate restTemplate = new RestTemplate();
+    restTemplate.setErrorHandler(new RestTemplateErrorHandler());
 
-        String url =
-                "https://api.trello.com/1/cards/" +
-                        ID +
-                        "/actions/comments?key=" +
-                        trelloKey +
-                        "&token=" +
-                        token;
-        Term term = new Term();
-        term.setText(text);
+    String url =
+      "https://api.trello.com/1/cards/" +
+      ID +
+      "/actions/comments?key=" +
+      trelloKey +
+      "&token=" +
+      token;
+    Term term = new Term();
+    term.setText(text);
 
-        if (ID.length() > 0) {
-            String response = restTemplate.postForEntity(url, term, String.class).getBody();
+    if (ID.length() > 0) {
+      String response = restTemplate
+        .postForEntity(url, term, String.class)
+        .getBody();
 
-            if (response != null && response.equals("Success")){
-                logger.info("Comment added to Trello card");
-                return true;
-            } else {
-                logger.warn("Post to Trello API failed -> " + response);
-                return false;
-            }
-        } else {
-            logger.warn("Trello card ID invalid, cannot add comment -> " + ID);
-            return false;
-        }
+      if (response != null && response.equals("Success")) {
+        logger.info("Comment added to Trello card");
+        return true;
+      } else {
+        logger.warn("Post to Trello API failed -> " + response);
+        return false;
+      }
+    } else {
+      logger.warn("Trello card ID invalid, cannot add comment -> " + ID);
+      return false;
     }
+  }
 }

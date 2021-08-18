@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class Github {
+
   private final EventService eventService;
 
   @Autowired
@@ -24,6 +25,8 @@ public class Github {
     @PathVariable String token,
     @RequestHeader("X-Github-Event") String event
   ) {
-    eventService.handleEvent(eventService.receiveEvent(payload, trelloKey, token, event));
+    eventService.handleEvent(
+      eventService.receiveEvent(payload, trelloKey, token, event)
+    );
   }
 }
