@@ -18,9 +18,25 @@ public class TrelloService {
   @Autowired
   public TrelloService() {}
 
+  private void checkNull(String trelloKey, String token) {
+    if (trelloKey == null || trelloKey.equals("")) {
+      throw new NullPointerException("Missing key");
+    }
+
+    if (token == null || token.equals("")) {
+      throw new NullPointerException("Missing token");
+    }
+  }
+
   public String getCardId(String name, String trelloKey, String token) {
     RestTemplate restTemplate = new RestTemplate();
     restTemplate.setErrorHandler(new RestTemplateErrorHandler());
+
+    if (name == null || name.equals("")) {
+      throw new NullPointerException("missing name string");
+    }
+
+    checkNull(trelloKey, token);
 
     String cardId = "";
     String url =
@@ -61,6 +77,16 @@ public class TrelloService {
     RestTemplate restTemplate = new RestTemplate();
     restTemplate.setErrorHandler(new RestTemplateErrorHandler());
 
+    if (ID == null || ID.equals("")) {
+      throw new NullPointerException("missing ID string");
+    }
+
+    if (attachmentURL == null || attachmentURL.equals("")) {
+      throw new NullPointerException("missing attachmentURL string");
+    }
+
+    checkNull(trelloKey, token);
+
     String url =
       "https://api.trello.com/1/cards/" +
       ID +
@@ -99,6 +125,15 @@ public class TrelloService {
   ) {
     RestTemplate restTemplate = new RestTemplate();
     restTemplate.setErrorHandler(new RestTemplateErrorHandler());
+
+    if (ID == null || ID.equals("")) {
+      throw new NullPointerException("missing ID string");
+    }
+    if (text == null || text.equals("")) {
+      throw new NullPointerException("missing text string");
+    }
+
+    checkNull(trelloKey, token);
 
     String url =
       "https://api.trello.com/1/cards/" +
