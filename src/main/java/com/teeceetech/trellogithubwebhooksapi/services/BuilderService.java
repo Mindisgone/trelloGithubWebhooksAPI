@@ -16,16 +16,73 @@ public class BuilderService {
     this.trelloService = trelloService;
   }
 
+  private void checkNull(
+    TrelloService trelloService,
+    Root payload,
+    String trelloKey,
+    String token
+  ) {
+    if (trelloService == null) {
+      throw new NullPointerException("missing trello service");
+    }
+
+    if (payload == null) {
+      throw new NullPointerException("Missing payload");
+    }
+
+    if (trelloKey == null || trelloKey.equals("")) {
+      throw new NullPointerException("Missing key");
+    }
+
+    if (token == null || token.equals("")) {
+      throw new NullPointerException("Missing token");
+    }
+  }
+
   public List<Boolean> buildOpenPullRequest(
     Root payload,
     String trelloKey,
     String token
   ) {
     List<Boolean> responses = new ArrayList<>();
+    Boolean attachResponse;
+    Boolean commentResponse;
+
+    checkNull(trelloService, payload, trelloKey, token);
+
+    if (payload.pull_request == null) {
+      throw new NullPointerException(
+        "payload is missing pull_request property"
+      );
+    }
+
+    if (payload.pull_request.head == null) {
+      throw new NullPointerException(
+        "payload is missing pull_request.head property"
+      );
+    }
+
+    if (
+      payload.pull_request.head.ref == null ||
+      payload.pull_request.head.ref.equals("")
+    ) {
+      throw new NullPointerException(
+        "payload is missing pull_request.head.ref property"
+      );
+    }
+
+    if (
+      payload.pull_request.html_url == null ||
+      payload.pull_request.html_url.equals("")
+    ) {
+      throw new NullPointerException(
+        "payload is missing pull_request.html_url property"
+      );
+    }
+
     String comment = "Opened PR " + payload.pull_request.html_url;
 
-    responses.add(
-      0,
+    attachResponse =
       trelloService.addCardAttachment(
         trelloService.getCardId(
           payload.pull_request.head.ref,
@@ -35,11 +92,17 @@ public class BuilderService {
         payload.pull_request.html_url,
         trelloKey,
         token
-      )
-    );
+      );
 
-    responses.add(
-      1,
+    if (attachResponse) {
+      responses.add(0, true);
+    }
+
+    if (!attachResponse) {
+      responses.add(0, false);
+    }
+
+    commentResponse =
       trelloService.addCardComment(
         trelloService.getCardId(
           payload.pull_request.head.ref,
@@ -49,8 +112,15 @@ public class BuilderService {
         comment,
         trelloKey,
         token
-      )
-    );
+      );
+
+    if (commentResponse) {
+      responses.add(1, true);
+    }
+
+    if (!commentResponse) {
+      responses.add(1, false);
+    }
 
     return responses;
   }
@@ -60,6 +130,26 @@ public class BuilderService {
     String trelloKey,
     String token
   ) {
+    checkNull(trelloService, payload, trelloKey, token);
+
+    if (
+      payload.pull_request.html_url == null ||
+      payload.pull_request.html_url.equals("")
+    ) {
+      throw new NullPointerException(
+        "payload is missing pull_request.html_url property"
+      );
+    }
+
+    if (
+      payload.pull_request.merged_by.login == null ||
+      payload.pull_request.merged_by.login.equals("")
+    ) {
+      throw new NullPointerException(
+        "payload is missing pull_request.html_url property"
+      );
+    }
+
     String comment =
       "Merged PR " +
       payload.pull_request.html_url +
@@ -75,6 +165,8 @@ public class BuilderService {
   }
 
   public Boolean buildReview(Root payload, String trelloKey, String token) {
+    checkNull(trelloService, payload, trelloKey, token);
+
     String comment =
       payload.review.body +
       " by Github user " +
@@ -93,6 +185,8 @@ public class BuilderService {
   }
 
   public boolean buildComment(Root payload, String trelloKey, String token) {
+    checkNull(trelloService, payload, trelloKey, token);
+
     String comment =
       "Github User " +
       payload.comment.user.login +
@@ -116,6 +210,8 @@ public class BuilderService {
     String trelloKey,
     String token
   ) {
+    checkNull(trelloService, payload, trelloKey, token);
+
     String comment =
       "Closed PR " +
       payload.pull_request.html_url +
