@@ -1,6 +1,5 @@
 package com.teeceetech.trellogithubwebhooksapi.services;
 
-import com.teeceetech.trellogithubwebhooksapi.handlers.RestTemplateErrorHandler;
 import com.teeceetech.trellogithubwebhooksapi.web.models.github.Attachment;
 import com.teeceetech.trellogithubwebhooksapi.web.models.trello.Card;
 import com.teeceetech.trellogithubwebhooksapi.web.models.trello.Term;
@@ -8,35 +7,38 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 public class TrelloService {
 
   static final Logger logger = LoggerFactory.getLogger(TrelloService.class);
+  private final HttpService httpService;
 
   @Autowired
-  public TrelloService() {}
+  public TrelloService(HttpService httpService) {
+    this.httpService = httpService;
+  }
 
-  private void checkNull(String trelloKey, String token) {
+  private void checkNull(String trelloKey, String token, HttpService httpService) {
     if (trelloKey == null || trelloKey.equals("")) {
-      throw new NullPointerException("Missing key");
+      throw new NullPointerException("missing key");
     }
 
     if (token == null || token.equals("")) {
-      throw new NullPointerException("Missing token");
+      throw new NullPointerException("missing token");
+    }
+
+    if (httpService == null) {
+      throw new NullPointerException("missing http service");
     }
   }
 
   public String getCardId(String name, String trelloKey, String token) {
-    RestTemplate restTemplate = new RestTemplate();
-    restTemplate.setErrorHandler(new RestTemplateErrorHandler());
-
     if (name == null || name.equals("")) {
       throw new NullPointerException("missing name string");
     }
 
-    checkNull(trelloKey, token);
+    checkNull(trelloKey, token, httpService);
 
     String cardId = "";
     String url =
@@ -47,21 +49,18 @@ public class TrelloService {
       "&token=" +
       token;
 
-    com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root root = restTemplate.getForObject(
-      url,
-      com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root.class
-    );
+    com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root root = httpService.searchTrelloCards(url);
 
-    if (root != null) {
+    if (root != null && root.cards != null && root.cards.size() > 0) {
       for (Card card : root.cards) {
-        if (card.name.equals(name)) {
+        if (card != null && card.name != null && !card.name.equals("") && card.name.equals(name)) {
           cardId = card.id;
           logger.info("Trello card found");
         }
       }
     } else {
       logger.warn(
-        "Did not get response from Trello API when retrieving card ID"
+        "Did not find Trello card"
       );
     }
 
@@ -74,18 +73,15 @@ public class TrelloService {
     String trelloKey,
     String token
   ) {
-    RestTemplate restTemplate = new RestTemplate();
-    restTemplate.setErrorHandler(new RestTemplateErrorHandler());
-
     if (ID == null || ID.equals("")) {
-      throw new NullPointerException("missing ID string");
+      throw new NullPointerException("missing card ID");
     }
 
     if (attachmentURL == null || attachmentURL.equals("")) {
-      throw new NullPointerException("missing attachmentURL string");
+      throw new NullPointerException("missing attachment URL");
     }
 
-    checkNull(trelloKey, token);
+    checkNull(trelloKey, token, httpService);
 
     String url =
       "https://api.trello.com/1/cards/" +
@@ -97,10 +93,8 @@ public class TrelloService {
     Attachment attachment = new Attachment();
     attachment.setUrl(attachmentURL);
 
-    if (ID.length() > 0) {
-      int response = restTemplate
-        .postForEntity(url, attachment, String.class)
-        .getStatusCodeValue();
+    if (ID.length() > 1) {
+      int response = httpService.postToTrello(url, attachment);
 
       if (response == 200) {
         logger.info("Link added to Trello card, response = " + response);
@@ -123,17 +117,14 @@ public class TrelloService {
     String trelloKey,
     String token
   ) {
-    RestTemplate restTemplate = new RestTemplate();
-    restTemplate.setErrorHandler(new RestTemplateErrorHandler());
-
     if (ID == null || ID.equals("")) {
-      throw new NullPointerException("missing ID string");
+      throw new NullPointerException("missing card ID");
     }
     if (text == null || text.equals("")) {
-      throw new NullPointerException("missing text string");
+      throw new NullPointerException("missing comment text");
     }
 
-    checkNull(trelloKey, token);
+    checkNull(trelloKey, token, httpService);
 
     String url =
       "https://api.trello.com/1/cards/" +
@@ -145,10 +136,8 @@ public class TrelloService {
     Term term = new Term();
     term.setText(text);
 
-    if (ID.length() > 0) {
-      int response = restTemplate
-        .postForEntity(url, term, String.class)
-        .getStatusCodeValue();
+    if (ID.length() > 1) {
+      int response = httpService.postToTrello(url, term);
 
       if (response == 200) {
         logger.info("Comment added to Trello card, response = " + response);

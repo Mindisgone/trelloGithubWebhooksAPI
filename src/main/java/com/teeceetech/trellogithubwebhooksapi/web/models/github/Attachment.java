@@ -2,7 +2,7 @@ package com.teeceetech.trellogithubwebhooksapi.web.models.github;
 
 public class Attachment {
 
-  String url;
+  public String url;
 
   public Attachment() {}
 
