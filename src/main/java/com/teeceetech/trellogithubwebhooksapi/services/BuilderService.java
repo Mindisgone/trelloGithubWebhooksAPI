@@ -17,7 +17,12 @@ public class BuilderService {
     this.trelloService = trelloService;
   }
 
-  private void checkNull(TrelloService trelloService, Root payload, String trelloKey, String token) {
+  private void checkNull(
+    TrelloService trelloService,
+    Root payload,
+    String trelloKey,
+    String token
+  ) {
     if (trelloService == null) {
       throw new NullPointerException("missing trello service");
     }
@@ -47,71 +52,75 @@ public class BuilderService {
     checkNull(trelloService, payload, trelloKey, token);
 
     if (payload.pull_request == null) {
-      throw new NullPointerException("payload is missing pull_request property");
+      throw new NullPointerException(
+        "payload is missing pull_request property"
+      );
     }
 
     if (payload.pull_request.head == null) {
-      throw new NullPointerException("payload is missing pull_request.head property");
+      throw new NullPointerException(
+        "payload is missing pull_request.head property"
+      );
     }
 
-    if (payload.pull_request.head.ref == null || payload.pull_request.head.ref.equals("")) {
-      throw new NullPointerException("payload is missing pull_request.head.ref property");
+    if (
+      payload.pull_request.head.ref == null ||
+      payload.pull_request.head.ref.equals("")
+    ) {
+      throw new NullPointerException(
+        "payload is missing pull_request.head.ref property"
+      );
     }
 
-    if (payload.pull_request.html_url == null || payload.pull_request.html_url.equals("")) {
-      throw new NullPointerException("payload is missing pull_request.html_url property");
+    if (
+      payload.pull_request.html_url == null ||
+      payload.pull_request.html_url.equals("")
+    ) {
+      throw new NullPointerException(
+        "payload is missing pull_request.html_url property"
+      );
     }
 
     String comment = "Opened PR " + payload.pull_request.html_url;
 
-    attachResponse = trelloService.addCardAttachment(
-            trelloService.getCardId(
-                    payload.pull_request.head.ref,
-                    trelloKey,
-                    token
-            ),
-            payload.pull_request.html_url,
-            trelloKey,
-            token
-    );
+    attachResponse =
+      trelloService.addCardAttachment(
+        trelloService.getCardId(
+          payload.pull_request.head.ref,
+          trelloKey,
+          token
+        ),
+        payload.pull_request.html_url,
+        trelloKey,
+        token
+      );
 
     if (attachResponse) {
-      responses.add(
-              0,
-              true
-              );
+      responses.add(0, true);
     }
 
     if (!attachResponse) {
-      responses.add(
-              0,
-              false
-      );
+      responses.add(0, false);
     }
 
-    commentResponse = trelloService.addCardComment(
-            trelloService.getCardId(
-                    payload.pull_request.head.ref,
-                    trelloKey,
-                    token
-            ),
-            comment,
-            trelloKey,
-            token
-    );
+    commentResponse =
+      trelloService.addCardComment(
+        trelloService.getCardId(
+          payload.pull_request.head.ref,
+          trelloKey,
+          token
+        ),
+        comment,
+        trelloKey,
+        token
+      );
 
     if (commentResponse) {
-      responses.add(
-              1,
-              true
-              );
+      responses.add(1, true);
     }
 
     if (!commentResponse) {
-      responses.add(
-              1,
-              false
-      );
+      responses.add(1, false);
     }
 
     return responses;
@@ -124,25 +133,35 @@ public class BuilderService {
   ) {
     checkNull(trelloService, payload, trelloKey, token);
 
-    if (payload.pull_request.html_url == null || payload.pull_request.html_url.equals("")) {
-      throw new NullPointerException("payload is missing pull_request.html_url property");
+    if (
+      payload.pull_request.html_url == null ||
+      payload.pull_request.html_url.equals("")
+    ) {
+      throw new NullPointerException(
+        "payload is missing pull_request.html_url property"
+      );
     }
 
-    if (payload.pull_request.merged_by.login == null || payload.pull_request.merged_by.login.equals("")) {
-      throw new NullPointerException("payload is missing pull_request.html_url property");
+    if (
+      payload.pull_request.merged_by.login == null ||
+      payload.pull_request.merged_by.login.equals("")
+    ) {
+      throw new NullPointerException(
+        "payload is missing pull_request.html_url property"
+      );
     }
 
     String comment =
-            "Merged PR " +
-                    payload.pull_request.html_url +
-                    " from " +
-                    payload.pull_request.merged_by.login;
+      "Merged PR " +
+      payload.pull_request.html_url +
+      " from " +
+      payload.pull_request.merged_by.login;
 
     return trelloService.addCardComment(
-            trelloService.getCardId(payload.pull_request.head.ref, trelloKey, token),
-            comment,
-            trelloKey,
-            token
+      trelloService.getCardId(payload.pull_request.head.ref, trelloKey, token),
+      comment,
+      trelloKey,
+      token
     );
   }
 
