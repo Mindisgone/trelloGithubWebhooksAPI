@@ -19,7 +19,11 @@ public class TrelloService {
     this.httpService = httpService;
   }
 
-  private void checkNull(String trelloKey, String token, HttpService httpService) {
+  private void checkNull(
+    String trelloKey,
+    String token,
+    HttpService httpService
+  ) {
     if (trelloKey == null || trelloKey.equals("")) {
       throw new NullPointerException("missing key");
     }
@@ -49,19 +53,24 @@ public class TrelloService {
       "&token=" +
       token;
 
-    com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root root = httpService.searchTrelloCards(url);
+    com.teeceetech.trellogithubwebhooksapi.web.models.trello.Root root = httpService.searchTrelloCards(
+      url
+    );
 
     if (root != null && root.cards != null && root.cards.size() > 0) {
       for (Card card : root.cards) {
-        if (card != null && card.name != null && !card.name.equals("") && card.name.equals(name)) {
+        if (
+          card != null &&
+          card.name != null &&
+          !card.name.equals("") &&
+          card.name.equals(name)
+        ) {
           cardId = card.id;
           logger.info("Trello card found");
         }
       }
     } else {
-      logger.warn(
-        "Did not find Trello card"
-      );
+      logger.warn("Did not find Trello card");
     }
 
     return cardId;

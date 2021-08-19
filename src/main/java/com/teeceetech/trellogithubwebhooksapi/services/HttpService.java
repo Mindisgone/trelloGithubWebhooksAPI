@@ -9,36 +9,38 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class HttpService {
 
-    public final RestTemplate restTemplate;
+  public final RestTemplate restTemplate;
 
-    @Autowired
-    public HttpService(RestTemplateBuilder builder) {
-        this.restTemplate = builder.build();
+  @Autowired
+  public HttpService(RestTemplateBuilder builder) {
+    this.restTemplate = builder.build();
+  }
+
+  private void checkNull(String url, RestTemplate restTemplate) {
+    if (url == null || url.equals("")) {
+      throw new NullPointerException("missing url");
     }
 
-    private void checkNull(String url, RestTemplate restTemplate) {
-        if (url == null || url.equals("")) {
-            throw new NullPointerException("missing url");
-        }
+    if (restTemplate == null) {
+      throw new NullPointerException("missing rest template");
+    }
+  }
 
-        if (restTemplate == null) {
-            throw new NullPointerException("missing rest template");
-        }
+  public Root searchTrelloCards(String url) {
+    checkNull(url, restTemplate);
+
+    return restTemplate.getForObject(url, Root.class);
+  }
+
+  public int postToTrello(String url, Object payload) {
+    checkNull(url, restTemplate);
+
+    if (payload == null) {
+      throw new NullPointerException("missing payload");
     }
 
-    public Root searchTrelloCards(String url) {
-        checkNull(url, restTemplate);
-
-        return restTemplate.getForObject(url, Root.class);
-    }
-
-    public int postToTrello(String url, Object payload) {
-        checkNull(url, restTemplate);
-
-        if (payload == null) {
-            throw new NullPointerException("missing payload");
-        }
-
-        return restTemplate.postForEntity(url, payload, String.class).getStatusCodeValue();
-    }
+    return restTemplate
+      .postForEntity(url, payload, String.class)
+      .getStatusCodeValue();
+  }
 }
