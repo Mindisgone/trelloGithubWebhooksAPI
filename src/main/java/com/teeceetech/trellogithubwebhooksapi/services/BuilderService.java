@@ -40,34 +40,28 @@ public class BuilderService {
     }
   }
 
-  private void checkPullRequestNull(PullRequest pullRequest){
+  private void checkPullRequestNull(PullRequest pullRequest) {
     if (pullRequest == null) {
       throw new NullPointerException(
-              "payload is missing pull_request property"
+        "payload is missing pull_request property"
       );
     }
 
     if (pullRequest.head == null) {
       throw new NullPointerException(
-              "payload is missing pull_request.head property"
+        "payload is missing pull_request.head property"
       );
     }
 
-    if (
-            pullRequest.head.ref == null ||
-                    pullRequest.head.ref.equals("")
-    ) {
+    if (pullRequest.head.ref == null || pullRequest.head.ref.equals("")) {
       throw new NullPointerException(
-              "payload is missing pull_request.head.ref property"
+        "payload is missing pull_request.head.ref property"
       );
     }
 
-    if (
-            pullRequest.html_url == null ||
-                    pullRequest.html_url.equals("")
-    ) {
+    if (pullRequest.html_url == null || pullRequest.html_url.equals("")) {
       throw new NullPointerException(
-              "payload is missing pull_request.html_url property"
+        "payload is missing pull_request.html_url property"
       );
     }
   }
@@ -141,9 +135,7 @@ public class BuilderService {
       payload.pull_request.merged_by.login == null ||
       payload.pull_request.merged_by.login.equals("")
     ) {
-      throw new NullPointerException(
-        "missing payload login"
-      );
+      throw new NullPointerException("missing payload login");
     }
 
     String comment =
@@ -180,7 +172,9 @@ public class BuilderService {
       throw new NullPointerException("missing review URL");
     }
 
-    if (payload.review.user.login == null || payload.review.user.login.equals("")) {
+    if (
+      payload.review.user.login == null || payload.review.user.login.equals("")
+    ) {
       throw new NullPointerException("missing review login");
     }
 
@@ -235,11 +229,11 @@ public class BuilderService {
     }
 
     if (
-            payload.pull_request.user.login == null ||
-                    payload.pull_request.user.login.equals("")
+      payload.pull_request.user.login == null ||
+      payload.pull_request.user.login.equals("")
     ) {
       throw new NullPointerException(
-              "payload is missing pull_request.user.login property"
+        "payload is missing pull_request.user.login property"
       );
     }
 
