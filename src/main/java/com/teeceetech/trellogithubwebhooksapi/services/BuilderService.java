@@ -1,5 +1,6 @@
 package com.teeceetech.trellogithubwebhooksapi.services;
 
+import com.teeceetech.trellogithubwebhooksapi.web.models.github.PullRequest;
 import com.teeceetech.trellogithubwebhooksapi.web.models.github.Root;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,15 +28,41 @@ public class BuilderService {
     }
 
     if (payload == null) {
-      throw new NullPointerException("Missing payload");
+      throw new NullPointerException("missing payload");
     }
 
     if (trelloKey == null || trelloKey.equals("")) {
-      throw new NullPointerException("Missing key");
+      throw new NullPointerException("missing key");
     }
 
     if (token == null || token.equals("")) {
-      throw new NullPointerException("Missing token");
+      throw new NullPointerException("missing token");
+    }
+  }
+
+  private void checkPullRequestNull(PullRequest pullRequest) {
+    if (pullRequest == null) {
+      throw new NullPointerException(
+        "payload is missing pull_request property"
+      );
+    }
+
+    if (pullRequest.head == null) {
+      throw new NullPointerException(
+        "payload is missing pull_request.head property"
+      );
+    }
+
+    if (pullRequest.head.ref == null || pullRequest.head.ref.equals("")) {
+      throw new NullPointerException(
+        "payload is missing pull_request.head.ref property"
+      );
+    }
+
+    if (pullRequest.html_url == null || pullRequest.html_url.equals("")) {
+      throw new NullPointerException(
+        "payload is missing pull_request.html_url property"
+      );
     }
   }
 
@@ -49,36 +76,7 @@ public class BuilderService {
     Boolean commentResponse;
 
     checkNull(trelloService, payload, trelloKey, token);
-
-    if (payload.pull_request == null) {
-      throw new NullPointerException(
-        "payload is missing pull_request property"
-      );
-    }
-
-    if (payload.pull_request.head == null) {
-      throw new NullPointerException(
-        "payload is missing pull_request.head property"
-      );
-    }
-
-    if (
-      payload.pull_request.head.ref == null ||
-      payload.pull_request.head.ref.equals("")
-    ) {
-      throw new NullPointerException(
-        "payload is missing pull_request.head.ref property"
-      );
-    }
-
-    if (
-      payload.pull_request.html_url == null ||
-      payload.pull_request.html_url.equals("")
-    ) {
-      throw new NullPointerException(
-        "payload is missing pull_request.html_url property"
-      );
-    }
+    checkPullRequestNull(payload.pull_request);
 
     String comment = "Opened PR " + payload.pull_request.html_url;
 
@@ -131,23 +129,17 @@ public class BuilderService {
     String token
   ) {
     checkNull(trelloService, payload, trelloKey, token);
+    checkPullRequestNull(payload.pull_request);
 
-    if (
-      payload.pull_request.html_url == null ||
-      payload.pull_request.html_url.equals("")
-    ) {
-      throw new NullPointerException(
-        "payload is missing pull_request.html_url property"
-      );
+    if (payload.pull_request.merged_by == null) {
+      throw new NullPointerException("missing merged by");
     }
 
     if (
       payload.pull_request.merged_by.login == null ||
       payload.pull_request.merged_by.login.equals("")
     ) {
-      throw new NullPointerException(
-        "payload is missing pull_request.html_url property"
-      );
+      throw new NullPointerException("missing payload login");
     }
 
     String comment =
@@ -166,6 +158,29 @@ public class BuilderService {
 
   public Boolean buildReview(Root payload, String trelloKey, String token) {
     checkNull(trelloService, payload, trelloKey, token);
+    checkPullRequestNull(payload.pull_request);
+
+    if (payload.review == null) {
+      throw new NullPointerException("missing review");
+    }
+
+    if (payload.review.user == null) {
+      throw new NullPointerException("missing review user");
+    }
+
+    if (payload.review.body == null || payload.review.body.equals("")) {
+      throw new NullPointerException("missing review body");
+    }
+
+    if (payload.review.html_url == null || payload.review.html_url.equals("")) {
+      throw new NullPointerException("missing review URL");
+    }
+
+    if (
+      payload.review.user.login == null || payload.review.user.login.equals("")
+    ) {
+      throw new NullPointerException("missing review login");
+    }
 
     String comment =
       payload.review.body +
@@ -186,6 +201,43 @@ public class BuilderService {
 
   public boolean buildComment(Root payload, String trelloKey, String token) {
     checkNull(trelloService, payload, trelloKey, token);
+
+    if (payload.comment == null) {
+      throw new NullPointerException("missing comment");
+    }
+
+    if (payload.comment.user == null) {
+      throw new NullPointerException("missing comment user");
+    }
+
+    if (
+      payload.comment.user.login == null ||
+      payload.comment.user.login.equals("")
+    ) {
+      throw new NullPointerException("missing comment user login");
+    }
+
+    if (payload.comment.body == null || payload.comment.body.equals("")) {
+      throw new NullPointerException("missing comment body");
+    }
+
+    if (
+      payload.comment.html_url == null || payload.comment.html_url.equals("")
+    ) {
+      throw new NullPointerException("missing comment url");
+    }
+
+    if (payload.issue == null) {
+      throw new NullPointerException("missing issue");
+    }
+
+    if (payload.issue.html_url == null || payload.issue.html_url.equals("")) {
+      throw new NullPointerException("missing issue url");
+    }
+
+    if (payload.issue.title == null || payload.issue.title.equals("")) {
+      throw new NullPointerException("missing issue title");
+    }
 
     String comment =
       "Github User " +
@@ -211,6 +263,20 @@ public class BuilderService {
     String token
   ) {
     checkNull(trelloService, payload, trelloKey, token);
+    checkPullRequestNull(payload.pull_request);
+
+    if (payload.pull_request.user == null) {
+      throw new NullPointerException("missing pull_request.user property");
+    }
+
+    if (
+      payload.pull_request.user.login == null ||
+      payload.pull_request.user.login.equals("")
+    ) {
+      throw new NullPointerException(
+        "payload is missing pull_request.user.login property"
+      );
+    }
 
     String comment =
       "Closed PR " +
