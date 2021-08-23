@@ -131,6 +131,10 @@ public class BuilderService {
     checkNull(trelloService, payload, trelloKey, token);
     checkPullRequestNull(payload.pull_request);
 
+    if (payload.pull_request.merged_by == null) {
+      throw new NullPointerException("missing merged by");
+    }
+
     if (
       payload.pull_request.merged_by.login == null ||
       payload.pull_request.merged_by.login.equals("")
@@ -197,6 +201,43 @@ public class BuilderService {
 
   public boolean buildComment(Root payload, String trelloKey, String token) {
     checkNull(trelloService, payload, trelloKey, token);
+
+    if (payload.comment == null) {
+      throw new NullPointerException("missing comment");
+    }
+
+    if (payload.comment.user == null) {
+      throw new NullPointerException("missing comment user");
+    }
+
+    if (
+      payload.comment.user.login == null ||
+      payload.comment.user.login.equals("")
+    ) {
+      throw new NullPointerException("missing comment user login");
+    }
+
+    if (payload.comment.body == null || payload.comment.body.equals("")) {
+      throw new NullPointerException("missing comment body");
+    }
+
+    if (
+      payload.comment.html_url == null || payload.comment.html_url.equals("")
+    ) {
+      throw new NullPointerException("missing comment url");
+    }
+
+    if (payload.issue == null) {
+      throw new NullPointerException("missing issue");
+    }
+
+    if (payload.issue.html_url == null || payload.issue.html_url.equals("")) {
+      throw new NullPointerException("missing issue url");
+    }
+
+    if (payload.issue.title == null || payload.issue.title.equals("")) {
+      throw new NullPointerException("missing issue title");
+    }
 
     String comment =
       "Github User " +

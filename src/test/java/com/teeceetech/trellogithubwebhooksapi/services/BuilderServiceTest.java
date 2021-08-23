@@ -28,7 +28,6 @@ class BuilderServiceTest {
     @Nested
     @DisplayName("when building open pull request and given")
     class buildOpenPullRequest {
-
         @Test
         @DisplayName("valid query parameters - return true")
         void validQuery() {
@@ -684,15 +683,481 @@ class BuilderServiceTest {
 
             assertEquals("missing payload", exception.getMessage());
         }
-
-        
     }
 
-    @Test
-    void buildComment() {
+    @Nested
+    @DisplayName("When building a comment and given")
+    class buildComment {
+        @Test
+        @DisplayName("valid query parameters - return true")
+        void validQuery() {
+            User user = new User();
+            user.login = "login";
+            Comment comment = new Comment();
+            comment.html_url = "comment_url";
+            comment.body = "body";
+            comment.user = user;
+            Issue issue = new Issue();
+            issue.html_url = "issue_url";
+            issue.title = "title";
+            Root payload = new Root();
+            payload.comment = comment;
+            payload.issue = issue;
+            String trelloKey = "key";
+            String token = "token";
+
+            doReturn("testID").when(trelloService).getCardId(anyString(), anyString(), anyString());
+            doReturn(true).when(trelloService).addCardComment(anyString(), anyString(), anyString(), anyString());
+
+            Boolean success = builderService.buildComment(payload, trelloKey, token);
+
+            assertEquals(true, success);
+        }
+
+        @Test
+        @DisplayName("invalid user login - return false")
+        void invalidLoginQuery() {
+            User user = new User();
+            user.login = "INVALID";
+            Comment comment = new Comment();
+            comment.html_url = "comment_url";
+            comment.body = "body";
+            comment.user = user;
+            Issue issue = new Issue();
+            issue.html_url = "issue_url";
+            issue.title = "title";
+            Root payload = new Root();
+            payload.comment = comment;
+            payload.issue = issue;
+            String trelloKey = "key";
+            String token = "token";
+
+            doReturn("branch_name").when(trelloService).getCardId(anyString(), anyString(), anyString());
+            doReturn(false).when(trelloService).addCardComment(anyString(), anyString(), anyString(), anyString());
+
+            Boolean success = builderService.buildComment(payload, trelloKey, token);
+
+            assertEquals(false, success);
+        }
+
+        @Test
+        @DisplayName("invalid comment url - return false")
+        void invalidCommentUrlQuery() {
+            User user = new User();
+            user.login = "login";
+            Comment comment = new Comment();
+            comment.html_url = "INVALID";
+            comment.body = "body";
+            comment.user = user;
+            Issue issue = new Issue();
+            issue.html_url = "issue_url";
+            issue.title = "title";
+            Root payload = new Root();
+            payload.comment = comment;
+            payload.issue = issue;
+            String trelloKey = "key";
+            String token = "token";
+
+            doReturn("").when(trelloService).getCardId(anyString(), anyString(), anyString());
+            doReturn(false).when(trelloService).addCardComment(anyString(), anyString(), anyString(), anyString());
+
+            Boolean success = builderService.buildComment(payload, trelloKey, token);
+
+            assertEquals(false, success);
+        }
+
+        @Test
+        @DisplayName("invalid comment body - return false")
+        void invalidCommentBodyQuery() {
+            User user = new User();
+            user.login = "login";
+            Comment comment = new Comment();
+            comment.html_url = "comment_url";
+            comment.body = "INVALID";
+            comment.user = user;
+            Issue issue = new Issue();
+            issue.html_url = "issue_url";
+            issue.title = "title";
+            Root payload = new Root();
+            payload.comment = comment;
+            payload.issue = issue;
+            String trelloKey = "key";
+            String token = "token";
+
+            doReturn("branch_name").when(trelloService).getCardId(anyString(), anyString(), anyString());
+            doReturn(false).when(trelloService).addCardComment(anyString(), anyString(), anyString(), anyString());
+
+            Boolean success = builderService.buildComment(payload, trelloKey, token);
+
+            assertEquals(false, success);
+        }
+
+        @Test
+        @DisplayName("invalid issue url - return false")
+        void invalidIssueUrlQuery() {
+            User user = new User();
+            user.login = "login";
+            Comment comment = new Comment();
+            comment.html_url = "comment_url";
+            comment.body = "body";
+            comment.user = user;
+            Issue issue = new Issue();
+            issue.html_url = "INVALID";
+            issue.title = "title";
+            Root payload = new Root();
+            payload.comment = comment;
+            payload.issue = issue;
+            String trelloKey = "key";
+            String token = "token";
+
+            doReturn("").when(trelloService).getCardId(anyString(), anyString(), anyString());
+            doReturn(false).when(trelloService).addCardComment(anyString(), anyString(), anyString(), anyString());
+
+            Boolean success = builderService.buildComment(payload, trelloKey, token);
+
+            assertEquals(false, success);
+        }
+
+        @Test
+        @DisplayName("invalid issue title - return false")
+        void invalidIssueTitleQuery() {
+            User user = new User();
+            user.login = "login";
+            Comment comment = new Comment();
+            comment.html_url = "comment_url";
+            comment.body = "body";
+            comment.user = user;
+            Issue issue = new Issue();
+            issue.html_url = "issue_url";
+            issue.title = "INVALID";
+            Root payload = new Root();
+            payload.comment = comment;
+            payload.issue = issue;
+            String trelloKey = "key";
+            String token = "token";
+
+            doReturn("").when(trelloService).getCardId(anyString(), anyString(), anyString());
+            doReturn(false).when(trelloService).addCardComment(anyString(), anyString(), anyString(), anyString());
+
+            Boolean success = builderService.buildComment(payload, trelloKey, token);
+
+            assertEquals(false, success);
+        }
+
+        @Test
+        @DisplayName("invalid Trello key - return false")
+        void invalidKeyQuery() {
+            User user = new User();
+            user.login = "login";
+            Comment comment = new Comment();
+            comment.html_url = "comment_url";
+            comment.body = "body";
+            comment.user = user;
+            Issue issue = new Issue();
+            issue.html_url = "issue_url";
+            issue.title = "title";
+            Root payload = new Root();
+            payload.comment = comment;
+            payload.issue = issue;
+            String trelloKey = "INVALID";
+            String token = "token";
+
+            doReturn("").when(trelloService).getCardId(anyString(), anyString(), anyString());
+            doReturn(false).when(trelloService).addCardComment(anyString(), anyString(), anyString(), anyString());
+
+            Boolean success = builderService.buildComment(payload, trelloKey, token);
+
+            assertEquals(false, success);
+        }
+
+        @Test
+        @DisplayName("invalid Trello token - return false")
+        void invalidTokenQuery() {
+            User user = new User();
+            user.login = "login";
+            Comment comment = new Comment();
+            comment.html_url = "comment_url";
+            comment.body = "body";
+            comment.user = user;
+            Issue issue = new Issue();
+            issue.html_url = "issue_url";
+            issue.title = "title";
+            Root payload = new Root();
+            payload.comment = comment;
+            payload.issue = issue;
+            String trelloKey = "key";
+            String token = "INVALID";
+
+            doReturn("").when(trelloService).getCardId(anyString(), anyString(), anyString());
+            doReturn(false).when(trelloService).addCardComment(anyString(), anyString(), anyString(), anyString());
+
+            Boolean success = builderService.buildComment(payload, trelloKey, token);
+
+            assertEquals(false, success);
+        }
+
+        @Test
+        @DisplayName("null as key - throw exception")
+        void keyNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "login";
+            Comment comment = new Comment();
+            comment.html_url = "comment_url";
+            comment.body = "body";
+            comment.user = user;
+            Issue issue = new Issue();
+            issue.html_url = "issue_url";
+            issue.title = "title";
+            Root payload = new Root();
+            payload.comment = comment;
+            payload.issue = issue;
+            String trelloKey = "";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildComment(payload, trelloKey, token));
+
+            assertEquals("missing key", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as token - throw exception")
+        void tokenNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "login";
+            Comment comment = new Comment();
+            comment.html_url = "comment_url";
+            comment.body = "body";
+            comment.user = user;
+            Issue issue = new Issue();
+            issue.html_url = "issue_url";
+            issue.title = "title";
+            Root payload = new Root();
+            payload.comment = comment;
+            payload.issue = issue;
+            String trelloKey = "key";
+            String token = "";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildComment(payload, trelloKey, token));
+
+            assertEquals("missing token", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as payload - throw exception")
+        void payloadNullThrowException() throws NullPointerException{
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildComment(null, trelloKey, token));
+
+            assertEquals("missing payload", exception.getMessage());
+        }
     }
 
-    @Test
-    void buildClosePullRequest() {
+    @Nested
+    @DisplayName("when building a pull request close")
+    class buildClosePullRequest {
+        @Test
+        @DisplayName("valid query parameters - return true")
+        void validQuery() {
+            User user = new User();
+            user.login = "login";
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            pullRequest.user = user;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            doReturn("testID").when(trelloService).getCardId(anyString(), anyString(), anyString());
+            doReturn(true).when(trelloService).addCardComment(anyString(), anyString(), anyString(), anyString());
+
+            Boolean success = builderService.buildClosePullRequest(payload, trelloKey, token);
+
+            assertEquals(true, success);
+        }
+
+        @Test
+        @DisplayName("invalid user login - return false")
+        void invalidLoginQuery() {
+            User user = new User();
+            user.login = "INVALID";
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            pullRequest.user = user;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            doReturn("branch_name").when(trelloService).getCardId(anyString(), anyString(), anyString());
+            doReturn(false).when(trelloService).addCardComment(anyString(), anyString(), anyString(), anyString());
+
+            Boolean success = builderService.buildClosePullRequest(payload, trelloKey, token);
+
+            assertEquals(false, success);
+        }
+
+        @Test
+        @DisplayName("invalid head ref - return false")
+        void invalidRefQuery() {
+            User user = new User();
+            user.login = "login";
+            Head head = new Head();
+            head.ref = "INVALID";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            pullRequest.user = user;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            doReturn("").when(trelloService).getCardId(anyString(), anyString(), anyString());
+            doReturn(false).when(trelloService).addCardComment(anyString(), anyString(), anyString(), anyString());
+
+            Boolean success = builderService.buildClosePullRequest(payload, trelloKey, token);
+
+            assertEquals(false, success);
+        }
+
+        @Test
+        @DisplayName("invalid pull request URL - return false")
+        void invalidUrlQuery() {
+            User user = new User();
+            user.login = "login";
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "INVALID";
+            pullRequest.head = head;
+            pullRequest.user = user;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            doReturn("branch_name").when(trelloService).getCardId(anyString(), anyString(), anyString());
+            doReturn(false).when(trelloService).addCardComment(anyString(), anyString(), anyString(), anyString());
+
+            Boolean success = builderService.buildClosePullRequest(payload, trelloKey, token);
+
+            assertEquals(false, success);
+        }
+
+        @Test
+        @DisplayName("invalid Trello key - return false")
+        void invalidKeyQuery() {
+            User user = new User();
+            user.login = "login";
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            pullRequest.user = user;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "INVALID";
+            String token = "token";
+
+            doReturn("").when(trelloService).getCardId(anyString(), anyString(), anyString());
+            doReturn(false).when(trelloService).addCardComment(anyString(), anyString(), anyString(), anyString());
+
+            Boolean success = builderService.buildClosePullRequest(payload, trelloKey, token);
+
+            assertEquals(false, success);
+        }
+
+        @Test
+        @DisplayName("invalid Trello token - return false")
+        void invalidTokenQuery() {
+            User user = new User();
+            user.login = "login";
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            pullRequest.user = user;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "INVALID";
+
+            doReturn("").when(trelloService).getCardId(anyString(), anyString(), anyString());
+            doReturn(false).when(trelloService).addCardComment(anyString(), anyString(), anyString(), anyString());
+
+            Boolean success = builderService.buildClosePullRequest(payload, trelloKey, token);
+
+            assertEquals(false, success);
+        }
+
+        @Test
+        @DisplayName("null as key - throw exception")
+        void keyNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "login";
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            pullRequest.user = user;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildClosePullRequest(payload, trelloKey, token));
+
+            assertEquals("missing key", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as token - throw exception")
+        void tokenNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "login";
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            pullRequest.user = user;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildClosePullRequest(payload, trelloKey, token));
+
+            assertEquals("missing token", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as payload - throw exception")
+        void payloadNullThrowException() throws NullPointerException{
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildClosePullRequest(null, trelloKey, token));
+
+            assertEquals("missing payload", exception.getMessage());
+        }
     }
 }
