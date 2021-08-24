@@ -1,8 +1,8 @@
 [![TravisCI (.com) build status](https://img.shields.io/travis/com/jupyterhub/jupyterhub/master?logo=travis)](https://travis-ci.com/github/Mindisgone/trelloGithubWebhooksAPI)
 [![GitHub](https://img.shields.io/badge/issue_tracking-trello-blue?logo=github)](https://trello.com/b/lAhgjtGK)
-![Website](https://img.shields.io/website?down_color=red&down_message=offline&label=api&up_color=green&up_message=online&url=http%3A%2F%2Fworkflow-webhooks.com%2Fapi%2Fstatus)
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/Mindisgone/trelloGithubWebhooksAPI)
 ![GitHub issues](https://img.shields.io/github/issues/Mindisgone/trelloGithubWebhooksAPI)
+![Website](https://img.shields.io/website?down_color=red&down_message=offline&label=status&up_color=green&up_message=online&url=http%3A%2F%2Fworkflow-webhooks.com%2Fapi%2Fstatus)
 
 # Trello/Github Webhooks API
 
