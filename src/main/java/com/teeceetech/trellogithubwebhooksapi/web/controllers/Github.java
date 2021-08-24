@@ -3,6 +3,7 @@ package com.teeceetech.trellogithubwebhooksapi.web.controllers;
 import com.teeceetech.trellogithubwebhooksapi.services.EventService;
 import com.teeceetech.trellogithubwebhooksapi.web.models.github.Root;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,5 +29,10 @@ public class Github {
     eventService.handleEvent(
       eventService.receiveEvent(payload, trelloKey, token, event)
     );
+  }
+
+  @RequestMapping(value = "/api/status", method = RequestMethod.GET)
+  public ResponseEntity<String> getStatus() {
+    return ResponseEntity.ok("available");
   }
 }
