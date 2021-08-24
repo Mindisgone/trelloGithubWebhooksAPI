@@ -867,6 +867,214 @@ class BuilderServiceTest {
 
             assertEquals("missing payload", exception.getMessage());
         }
+
+        @Test
+        @DisplayName("null as ref - throw exception")
+        void refNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "login";
+            Review review = new Review();
+            review.body = "body";
+            review.html_url = "review_url";
+            review.user = user;
+            Head head = new Head();
+            head.ref = "";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            payload.review = review;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildReview(payload, trelloKey, token));
+
+            assertEquals("payload is missing pull_request.head.ref property", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as head - throw exception")
+        void headNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "login";
+            Review review = new Review();
+            review.body = "body";
+            review.html_url = "review_url";
+            review.user = user;
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            payload.review = review;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildReview(payload, trelloKey, token));
+
+            assertEquals("payload is missing pull_request.head property", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as pull request URL - throw exception")
+        void urlNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "login";
+            Review review = new Review();
+            review.body = "body";
+            review.html_url = "review_url";
+            review.user = user;
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "";
+            pullRequest.head = head;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            payload.review = review;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildReview(payload, trelloKey, token));
+
+            assertEquals("payload is missing pull_request.html_url property", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as pull request - throw exception")
+        void pullRequestNullThrowException() throws NullPointerException{
+            Root payload = new Root();
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildReview(payload, trelloKey, token));
+
+            assertEquals("payload is missing pull_request property", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as login - throw exception")
+        void loginNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "";
+            Review review = new Review();
+            review.body = "body";
+            review.html_url = "review_url";
+            review.user = user;
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            payload.review = review;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildReview(payload, trelloKey, token));
+
+            assertEquals("missing login", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as user - throw exception")
+        void userNullThrowException() throws NullPointerException{
+            Review review = new Review();
+            review.body = "body";
+            review.html_url = "review_url";
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            payload.review = review;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildReview(payload, trelloKey, token));
+
+            assertEquals("missing user", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as review - throw exception")
+        void reviewNullThrowException() throws NullPointerException{
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildReview(payload, trelloKey, token));
+
+            assertEquals("missing review", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as body - throw exception")
+        void bodyNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "login";
+            Review review = new Review();
+            review.body = "";
+            review.html_url = "review_url";
+            review.user = user;
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            payload.review = review;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildReview(payload, trelloKey, token));
+
+            assertEquals("missing body", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as review URL - throw exception")
+        void reviewUrlNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "login";
+            Review review = new Review();
+            review.body = "body";
+            review.html_url = "";
+            review.user = user;
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            payload.review = review;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildReview(payload, trelloKey, token));
+
+            assertEquals("missing review url", exception.getMessage());
+        }
     }
 
     @Nested
@@ -1138,6 +1346,184 @@ class BuilderServiceTest {
                     builderService.buildComment(null, trelloKey, token));
 
             assertEquals("missing payload", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as login - throw exception")
+        void loginNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "";
+            Comment comment = new Comment();
+            comment.html_url = "comment_url";
+            comment.body = "body";
+            comment.user = user;
+            Issue issue = new Issue();
+            issue.html_url = "issue_url";
+            issue.title = "title";
+            Root payload = new Root();
+            payload.comment = comment;
+            payload.issue = issue;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildComment(payload, trelloKey, token));
+
+            assertEquals("missing login", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as user - throw exception")
+        void userNullThrowException() throws NullPointerException{
+            Comment comment = new Comment();
+            comment.html_url = "comment_url";
+            comment.body = "body";
+            Issue issue = new Issue();
+            issue.html_url = "issue_url";
+            issue.title = "title";
+            Root payload = new Root();
+            payload.comment = comment;
+            payload.issue = issue;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildComment(payload, trelloKey, token));
+
+            assertEquals("missing user", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as comment - throw exception")
+        void commentNullThrowException() throws NullPointerException{
+            Issue issue = new Issue();
+            issue.html_url = "issue_url";
+            issue.title = "title";
+            Root payload = new Root();
+            payload.issue = issue;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildComment(payload, trelloKey, token));
+
+            assertEquals("missing comment", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as comment URL - throw exception")
+        void commentUrlNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "login";
+            Comment comment = new Comment();
+            comment.html_url = "";
+            comment.body = "body";
+            comment.user = user;
+            Issue issue = new Issue();
+            issue.html_url = "issue_url";
+            issue.title = "title";
+            Root payload = new Root();
+            payload.comment = comment;
+            payload.issue = issue;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildComment(payload, trelloKey, token));
+
+            assertEquals("missing comment url", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as comment body - throw exception")
+        void bodyNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "login";
+            Comment comment = new Comment();
+            comment.html_url = "comment_url";
+            comment.body = "";
+            comment.user = user;
+            Issue issue = new Issue();
+            issue.html_url = "issue_url";
+            issue.title = "title";
+            Root payload = new Root();
+            payload.comment = comment;
+            payload.issue = issue;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildComment(payload, trelloKey, token));
+
+            assertEquals("missing body", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as issue - throw exception")
+        void issueNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "login";
+            Comment comment = new Comment();
+            comment.html_url = "comment_url";
+            comment.body = "body";
+            comment.user = user;
+            Root payload = new Root();
+            payload.comment = comment;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildComment(payload, trelloKey, token));
+
+            assertEquals("missing issue", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as issue url - throw exception")
+        void issueUrlNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "login";
+            Comment comment = new Comment();
+            comment.html_url = "comment_url";
+            comment.body = "body";
+            comment.user = user;
+            Issue issue = new Issue();
+            issue.html_url = "";
+            issue.title = "title";
+            Root payload = new Root();
+            payload.comment = comment;
+            payload.issue = issue;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildComment(payload, trelloKey, token));
+
+            assertEquals("missing issue url", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as issue title - throw exception")
+        void issueTitleNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "login";
+            Comment comment = new Comment();
+            comment.html_url = "comment_url";
+            comment.body = "body";
+            comment.user = user;
+            Issue issue = new Issue();
+            issue.html_url = "issue_url";
+            issue.title = "";
+            Root payload = new Root();
+            payload.comment = comment;
+            payload.issue = issue;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildComment(payload, trelloKey, token));
+
+            assertEquals("missing issue title", exception.getMessage());
         }
     }
 
