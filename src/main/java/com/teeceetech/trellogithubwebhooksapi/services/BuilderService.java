@@ -165,21 +165,21 @@ public class BuilderService {
     }
 
     if (payload.review.user == null) {
-      throw new NullPointerException("missing review user");
+      throw new NullPointerException("missing user");
     }
 
     if (payload.review.body == null || payload.review.body.equals("")) {
-      throw new NullPointerException("missing review body");
+      throw new NullPointerException("missing body");
     }
 
     if (payload.review.html_url == null || payload.review.html_url.equals("")) {
-      throw new NullPointerException("missing review URL");
+      throw new NullPointerException("missing review url");
     }
 
     if (
       payload.review.user.login == null || payload.review.user.login.equals("")
     ) {
-      throw new NullPointerException("missing review login");
+      throw new NullPointerException("missing login");
     }
 
     String comment =
@@ -207,18 +207,18 @@ public class BuilderService {
     }
 
     if (payload.comment.user == null) {
-      throw new NullPointerException("missing comment user");
+      throw new NullPointerException("missing user");
     }
 
     if (
       payload.comment.user.login == null ||
       payload.comment.user.login.equals("")
     ) {
-      throw new NullPointerException("missing comment user login");
+      throw new NullPointerException("missing login");
     }
 
     if (payload.comment.body == null || payload.comment.body.equals("")) {
-      throw new NullPointerException("missing comment body");
+      throw new NullPointerException("missing body");
     }
 
     if (
