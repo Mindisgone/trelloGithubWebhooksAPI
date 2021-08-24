@@ -32,12 +32,12 @@ class TrelloServiceTest {
         @Test
         @DisplayName("valid parameters - return card ID")
         void validQuery() {
-            String name = "testName";
-            String trelloKey = "validKey";
-            String token = "validToken";
+            String name = "name";
+            String trelloKey = "key";
+            String token = "token";
 
             Card card = new Card();
-            card.id = "testID";
+            card.id = "ID";
             card.name = name;
             Root mockResponse = new Root();
             mockResponse.cards = new ArrayList<>();
@@ -53,13 +53,12 @@ class TrelloServiceTest {
         @Test
         @DisplayName("invalid card name - return empty string")
         void invalidNameQuery() {
-            String name = "WrongName";
-            String trelloKey = "validKey";
-            String token = "validToken";
+            String name = "INVALID";
+            String trelloKey = "key";
+            String token = "token";
 
             Card card = new Card();
-            card.id = "testID";
-            card.name = "testName";
+            card.id = "ID";
             Root mockResponse = new Root();
             mockResponse.cards = new ArrayList<>();
             mockResponse.cards.add(card);
@@ -75,9 +74,9 @@ class TrelloServiceTest {
         @Test
         @DisplayName("invalid card key - return empty string")
         void invalidKeyQuery() {
-            String name = "testName";
-            String trelloKey = "invalidKey";
-            String token = "validToken";
+            String name = "name";
+            String trelloKey = "INVALID";
+            String token = "token";
 
             doReturn(new Root()).when(httpService).searchTrelloCards(anyString());
 
@@ -89,9 +88,9 @@ class TrelloServiceTest {
         @Test
         @DisplayName("invalid card token - return empty string")
         void invalidTokenQuery() {
-            String name = "testName";
-            String trelloKey = "validKey";
-            String token = "invalidToken";
+            String name = "name";
+            String trelloKey = "key";
+            String token = "INVALID";
 
             doReturn(new Root()).when(httpService).searchTrelloCards(anyString());
 
@@ -104,8 +103,8 @@ class TrelloServiceTest {
         @DisplayName("null as name - throw exception")
         void nameNullThrowException() throws NullPointerException{
             String name = "";
-            String trelloKey = "Key";
-            String token = "Token";
+            String trelloKey = "key";
+            String token = "token";
 
             NullPointerException exception = assertThrows(NullPointerException.class, () ->
                     trelloService.getCardId(name, trelloKey, token));
