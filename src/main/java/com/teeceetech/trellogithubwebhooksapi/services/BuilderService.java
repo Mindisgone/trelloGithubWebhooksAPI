@@ -139,7 +139,7 @@ public class BuilderService {
       payload.pull_request.merged_by.login == null ||
       payload.pull_request.merged_by.login.equals("")
     ) {
-      throw new NullPointerException("missing payload login");
+      throw new NullPointerException("missing login");
     }
 
     String comment =
@@ -266,16 +266,14 @@ public class BuilderService {
     checkPullRequestNull(payload.pull_request);
 
     if (payload.pull_request.user == null) {
-      throw new NullPointerException("missing pull_request.user property");
+      throw new NullPointerException("missing user");
     }
 
     if (
       payload.pull_request.user.login == null ||
       payload.pull_request.user.login.equals("")
     ) {
-      throw new NullPointerException(
-        "payload is missing pull_request.user.login property"
-      );
+      throw new NullPointerException("missing login");
     }
 
     String comment =

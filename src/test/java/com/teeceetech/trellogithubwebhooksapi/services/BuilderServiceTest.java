@@ -187,6 +187,73 @@ class BuilderServiceTest {
 
             assertEquals("missing payload", exception.getMessage());
         }
+
+        @Test
+        @DisplayName("null as ref - throw exception")
+        void refNullThrowException() throws NullPointerException{
+            Head head = new Head();
+            head.ref = "";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildOpenPullRequest(payload, trelloKey, token));
+
+            assertEquals("payload is missing pull_request.head.ref property", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as head - throw exception")
+        void headNullThrowException() throws NullPointerException{
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildOpenPullRequest(payload, trelloKey, token));
+
+            assertEquals("payload is missing pull_request.head property", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as pull request URL - throw exception")
+        void urlNullThrowException() throws NullPointerException{
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "";
+            pullRequest.head = head;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildOpenPullRequest(payload, trelloKey, token));
+
+            assertEquals("payload is missing pull_request.html_url property", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as pull request - throw exception")
+        void pullRequestNullThrowException() throws NullPointerException{
+            Root payload = new Root();
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildOpenPullRequest(payload, trelloKey, token));
+
+            assertEquals("payload is missing pull_request property", exception.getMessage());
+        }
     }
 
     @Nested
@@ -390,6 +457,123 @@ class BuilderServiceTest {
                     builderService.buildMergePullRequest(null, trelloKey, token));
 
             assertEquals("missing payload", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as ref - throw exception")
+        void refNullThrowException() throws NullPointerException{
+            MergedBy mergedBy = new MergedBy();
+            mergedBy.login = "login";
+            Head head = new Head();
+            head.ref = "";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            pullRequest.merged_by = mergedBy;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildMergePullRequest(payload, trelloKey, token));
+
+            assertEquals("payload is missing pull_request.head.ref property", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as head - throw exception")
+        void headNullThrowException() throws NullPointerException{
+            MergedBy mergedBy = new MergedBy();
+            mergedBy.login = "login";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.merged_by = mergedBy;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildMergePullRequest(payload, trelloKey, token));
+
+            assertEquals("payload is missing pull_request.head property", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as pull request URL - throw exception")
+        void urlNullThrowException() throws NullPointerException{
+            MergedBy mergedBy = new MergedBy();
+            mergedBy.login = "login";
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "";
+            pullRequest.head = head;
+            pullRequest.merged_by = mergedBy;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildMergePullRequest(payload, trelloKey, token));
+
+            assertEquals("payload is missing pull_request.html_url property", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as pull request - throw exception")
+        void pullRequestNullThrowException() throws NullPointerException{
+            Root payload = new Root();
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildMergePullRequest(payload, trelloKey, token));
+
+            assertEquals("payload is missing pull_request property", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as login - throw exception")
+        void loginNullThrowException() throws NullPointerException{
+            MergedBy mergedBy = new MergedBy();
+            mergedBy.login = "";
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            pullRequest.merged_by = mergedBy;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildMergePullRequest(payload, trelloKey, token));
+
+            assertEquals("missing login", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as merged by - throw exception")
+        void mergedByNullThrowException() throws NullPointerException{
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildMergePullRequest(payload, trelloKey, token));
+
+            assertEquals("missing merged by", exception.getMessage());
         }
     }
 
@@ -1158,6 +1342,123 @@ class BuilderServiceTest {
                     builderService.buildClosePullRequest(null, trelloKey, token));
 
             assertEquals("missing payload", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as ref - throw exception")
+        void refNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "login";
+            Head head = new Head();
+            head.ref = "";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            pullRequest.user = user;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildClosePullRequest(payload, trelloKey, token));
+
+            assertEquals("payload is missing pull_request.head.ref property", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as head - throw exception")
+        void headNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "login";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.user = user;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildClosePullRequest(payload, trelloKey, token));
+
+            assertEquals("payload is missing pull_request.head property", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as pull request URL - throw exception")
+        void urlNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "login";
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "";
+            pullRequest.head = head;
+            pullRequest.user = user;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildClosePullRequest(payload, trelloKey, token));
+
+            assertEquals("payload is missing pull_request.html_url property", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as pull request - throw exception")
+        void pullRequestNullThrowException() throws NullPointerException{
+            Root payload = new Root();
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildClosePullRequest(payload, trelloKey, token));
+
+            assertEquals("payload is missing pull_request property", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as login - throw exception")
+        void loginNullThrowException() throws NullPointerException{
+            User user = new User();
+            user.login = "";
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            pullRequest.user = user;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildClosePullRequest(payload, trelloKey, token));
+
+            assertEquals("missing login", exception.getMessage());
+        }
+
+        @Test
+        @DisplayName("null as user - throw exception")
+        void userNullThrowException() throws NullPointerException{
+            Head head = new Head();
+            head.ref = "branch_name";
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.html_url = "html_url";
+            pullRequest.head = head;
+            Root payload = new Root();
+            payload.pull_request = pullRequest;
+            String trelloKey = "key";
+            String token = "token";
+
+            NullPointerException exception = assertThrows(NullPointerException.class, () ->
+                    builderService.buildClosePullRequest(payload, trelloKey, token));
+
+            assertEquals("missing user", exception.getMessage());
         }
     }
 }
