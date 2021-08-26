@@ -3,7 +3,6 @@ install: skip
 os: linux
 dist: trusty
 jdk: oraclejdk8
-sudo: required
 branches:
   only:
     - master
