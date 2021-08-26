@@ -9,3 +9,16 @@ branches:
     - master
 script:
   - echo yes | ./gradlew build --scan -s
+before_deploy:
+  - echo yes | ./gradlew clean build -Pversion=$TRAVIS_TAG_NAME
+deploy:
+  provider: releases
+  api_key:
+    secure: KlYg3v5+1xhYpYekw9bJhRUQpW2SJ5vmk6LMfMZSTVesXEcatOwOVQinoZ7wgOogqk/H+VEmpG2thuvAL+p2WbvsNhKgdaVW5qSBIjOVm5jTn+ojRYw16o3WW7fiCwW3lXM/8J1kG345ZAn/6/6SjFN+sxtmtYe4VajwGld23jWiXkZoE5SFB+O6/7y+mPHd3BC1C4LEmAGNiH8vTlRT6dNsREXxkbG+FS6Me/ENTCRIEntKV96rpL/RIKRTaWc91skhA8H0BNgx0CcqU4kp7t3YoXsg1Pr85QPXfm9v1LDEBKSw0zwJO8mXObxYIwoqEwAR6+vbAn4VRmyg7RS0Lq8DcDOIFYhCeJ047sFLFFyYi43zf3eWoycIi4zDzZtD1WxGoQkd22rMcFIbzvGkzd7V3DNPuIawohd8k6dZQfY6zdwW0+qHSiJCO6HFgt/ShxkjtSgDJKZAi9xCXcXYdDWlksNF2SYp/383aTHbdDe87OCPGcT+oYgqsvXVdEbVpIg3yt3nSD2ImmFcPZCGv2Mhcg9rsWWTpq5Xle4cqqvakK+rWEWmCoMec3bbvX2j7F4+1mjZRq/cEBNvGiqfMg5cRk2df0wHuYVFXKhsu3RkJE5WXPk6VKoCx7iz0R/knOWmktqYOfusQ1c3qMAcJ7sLHORhV8R3gwLnMNU5cfM=
+  file: $TRAVIS_BUILD_DIR/build/libs/*
+  skip_cleanup: true
+  on:
+    tags: true
+env:
+  global:
+    secure: KlYg3v5+1xhYpYekw9bJhRUQpW2SJ5vmk6LMfMZSTVesXEcatOwOVQinoZ7wgOogqk/H+VEmpG2thuvAL+p2WbvsNhKgdaVW5qSBIjOVm5jTn+ojRYw16o3WW7fiCwW3lXM/8J1kG345ZAn/6/6SjFN+sxtmtYe4VajwGld23jWiXkZoE5SFB+O6/7y+mPHd3BC1C4LEmAGNiH8vTlRT6dNsREXxkbG+FS6Me/ENTCRIEntKV96rpL/RIKRTaWc91skhA8H0BNgx0CcqU4kp7t3YoXsg1Pr85QPXfm9v1LDEBKSw0zwJO8mXObxYIwoqEwAR6+vbAn4VRmyg7RS0Lq8DcDOIFYhCeJ047sFLFFyYi43zf3eWoycIi4zDzZtD1WxGoQkd22rMcFIbzvGkzd7V3DNPuIawohd8k6dZQfY6zdwW0+qHSiJCO6HFgt/ShxkjtSgDJKZAi9xCXcXYdDWlksNF2SYp/383aTHbdDe87OCPGcT+oYgqsvXVdEbVpIg3yt3nSD2ImmFcPZCGv2Mhcg9rsWWTpq5Xle4cqqvakK+rWEWmCoMec3bbvX2j7F4+1mjZRq/cEBNvGiqfMg5cRk2df0wHuYVFXKhsu3RkJE5WXPk6VKoCx7iz0R/knOWmktqYOfusQ1c3qMAcJ7sLHORhV8R3gwLnMNU5cfM=
