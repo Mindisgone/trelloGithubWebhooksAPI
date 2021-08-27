@@ -38,9 +38,13 @@ Other events will be supported in future releases.
 
 ### Install
 
-This API is a hosted solution, however a npm package and build
-instructions will be posted here in a future release to support local
-installations.
+This API is a hosted solution, however to run your own server simply download the jar from the [latest release](https://github.com/Mindisgone/trelloGithubWebhooksAPI/releases) then run:
+
+```
+java -jar trello-github-webhooks-api-**<version number>**.jar
+```
+
+> Server will be running on **port 8080**
 
 ## Usage
 
